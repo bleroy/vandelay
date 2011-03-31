@@ -1,0 +1,11 @@
+Name: Vandelay.Meta
+AntiForgery: enabled
+Author: Bertrand Le Roy
+Website: http://weblogs.asp.net/bleroy
+Version: 1.0
+OrchardVersion: 1.0
+Description: Meta keyword and description for content items
+Features:
+    Vandelay.Meta:
+        Description: Meta keyword and description for content items
+		Category: Content
