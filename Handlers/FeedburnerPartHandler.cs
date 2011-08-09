@@ -4,9 +4,9 @@ using Orchard.Environment.Extensions;
 using Vandelay.Industries.Models;
 
 namespace Vandelay.Industries.Handlers {
-    [OrchardFeature("Vandelay.Industries")]
-    public class MetaHandler : ContentHandler {
-        public MetaHandler(IRepository<MetaRecord> repository) {
+    [OrchardFeature("Vandelay.Feedburner")]
+    public class FeedburnerPartHandler : ContentHandler {
+        public FeedburnerPartHandler(IRepository<FeedburnerPartRecord> repository) {
             Filters.Add(StorageFilter.For(repository));
         }
     }

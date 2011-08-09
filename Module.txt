@@ -1,11 +1,43 @@
-Name: Vandelay.Meta
+Name: Vandelay Industries
 AntiForgery: enabled
 Author: Bertrand Le Roy
 Website: http://weblogs.asp.net/bleroy
-Version: 1.0
-OrchardVersion: 1.0
-Description: Meta keyword and description for content items
+Version: 1.2
+OrchardVersion: 1.2
+Description: A collection of useful Orchard modules
+FeatureName: Vandelay Meta
+Category: Content
+FeatureDescription: Meta keyword and description for content items
 Features:
-    Vandelay.Meta:
-        Description: Meta keyword and description for content items
+    Vandelay.Classy:
+        Name: Vandelay Classy
+        Description: Add ids, classes and scripts to the rendering of your content items through this part that can be added to any content type.
+		Category: Designer
+    Vandelay.Favicon:
+        Name: Vandelay Favicon
+        Description: Adds a favicon setting to site settings
 		Category: Content
+		Dependencies: Orchard.Media, Settings
+    Vandelay.Feedburner:
+        Description: Enables Feedburner RSS feeds
+        Category: Syndication
+        Dependencies: Routable, Feeds
+    Vandelay.TagCloud:
+        Name: Vandelay Tag Cloud
+        Description: A simple tag cloud widget and result pages for your Orchard sites.
+        Dependencies: Orchard.Tags
+        Category: Navigation
+    Vandelay.TagRss:
+        Name: Vandelay Tag RSS
+        Description: Adds RSS feeds to tags.
+        Dependencies: Orchard.Tags, Feeds
+        Category: Syndication
+    Vandelay.ThemePicker:
+        Name: Vandelay Theme Picker
+        Description: Pick a different theme based on the user agent.
+		Dependencies: Orchard.Themes
+        Category: Design
+    Vandelay.TranslationManager:
+        Name: Vandelay Translation Manager
+        Description: Translation management tools
+        Category: Localization

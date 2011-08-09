@@ -1,0 +1,15 @@
+﻿@using Vandelay.Industries.Models
+@model FeedburnerPart
+
+<fieldset>
+  <legend>Feedburner</legend>
+            
+  <div class="editor-label">
+    @Html.LabelFor(model => model.FeedburnerUrl)
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.FeedburnerUrl)
+    @Html.ValidationMessageFor(model => model.FeedburnerUrl)
+  </div>
+  <span class="hint">@T("Get a feedburner feed from <a href=\"http://feedburner.google.com\">http://feedburner.google.com</a>. You will need the URL of your current feed, that you can find by viewing the source of the front-end view of this content item in your browser. You should be looking for a tag looking like this:  &lt;link rel=\"alternate\" type=\"application/rss+xml title=\"my content item\" href=\"/rss?containerid=13\" /&gt;. The URL you want to give on the Feedburner site is the value of the href attribute. This href value is unfortunately relative so we need to add the absolute URL of the site in front of it (e.g. \"http://contoso.com/rss?containerid=13\"). Once you have set-up your Feedburner feed with that absolute URL, you will be provided a feedburner URL for your feed, which is what you want to paste into the text field above.")</span>
+</fieldset>

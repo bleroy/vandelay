@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<Orchard>
+  <Recipe>
+    <Name>Add Feedburner to blogs</Name>
+    <Description>Adds the Feedburner part to the blog content type.</Description>
+    <Author>Bertrand Le Roy</Author>
+    <WebSite>http://weblogs.asp.net/bleroy</WebSite>
+    <Tags>blog, feedburner, rss</Tags>
+    <Version>1.0</Version>
+  </Recipe>
+  
+  <Feature enable="Vandelay.Feedburner" />
+  
+  <Metadata>
+    <Types>
+      <Blog>
+        <FeedburnerPart />
+      </Blog>
+    </Types>
+  </Metadata>
+</Orchard>

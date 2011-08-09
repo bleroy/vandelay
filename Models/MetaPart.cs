@@ -1,7 +1,9 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
+using Orchard.Environment.Extensions;
 
-namespace Vandelay.Meta.Models {
+namespace Vandelay.Industries.Models {
+    [OrchardFeature("Vandelay.Meta")]
     public class MetaPart : ContentPart<MetaRecord> {
         public string Keywords {
             get { return Record.Keywords; }
@@ -14,7 +16,8 @@ namespace Vandelay.Meta.Models {
         }
     }
 
-    public class MetaRecord: ContentPartRecord {
+    [OrchardFeature("Vandelay.Meta")]
+    public class MetaRecord : ContentPartRecord {
         public virtual string Keywords { get; set; }
         public virtual string Description { get; set; }
     }

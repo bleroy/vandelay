@@ -2,10 +2,12 @@
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.Environment.Extensions;
 using Orchard.UI.Resources;
-using Vandelay.Meta.Models;
+using Vandelay.Industries.Models;
 
-namespace Vandelay.Meta.Drivers {
+namespace Vandelay.Industries.Drivers {
+    [OrchardFeature("Vandelay.Industries")]
     public class MetaDriver : ContentPartDriver<MetaPart> {
         private readonly IWorkContextAccessor _wca;
 

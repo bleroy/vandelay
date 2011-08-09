@@ -1,0 +1,27 @@
+﻿@using Vandelay.Industries.Models
+@model TagCloudPart
+
+<fieldset>
+  <legend>Tag Cloud</legend>
+            
+  <div class="editor-label">
+    @Html.LabelFor(model => model.Slug)
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.Slug)
+    @Html.ValidationMessageFor(model => model.Slug)
+    <span class="hint">@T("Enter the slug of the container for which you want the tag cloud (leave empty for the cloud to be scoped to the whole site). ")</span>
+  </div>
+  <div class="editor-label">
+    @Html.LabelFor(model => model.Buckets)
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.Buckets, new { @class = "text text-small" })
+    @Html.ValidationMessageFor(model => model.Buckets)
+    <span class="hint">@T("The number of buckets determines how many different sizes of tags will get rendered in the cloud.")</span>
+  </div>
+  <div>
+    <span class="hint">@T("The tag cloud will be rendered as an unordered list with different CSS classes for each size of tag. In order to properly render, the cloud requires CSS similar to the followinf in the theme's stylesheet:<br/>ul.tagCloud { list-style: none; }<br/>li.tagCloud-tag { display: inline; }<br/>.tagCloud-1 { font-size: 1em; }<br/>.tagCloud-2 { font-size: 1.1em; }<br/>.tagCloud-3 { font-size: 1.2em; }<br/>.tagCloud-4 { font-size: 1.3em; }<br/>.tagCloud-5 { font-size: 1.4em; }")</span>
+  </div>
+            
+</fieldset>

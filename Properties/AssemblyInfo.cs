@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Vandelay.Meta")]
+[assembly: AssemblyTitle("Vandelay.Industries")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("Orchard")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("568e6ef3-4e8c-4731-bc11-401ba830d32b")]
+[assembly: Guid("85d3793d-86f0-43db-a59b-022ed4335332")]
 
 // Version information for an assembly consists of the following four values:
 //
