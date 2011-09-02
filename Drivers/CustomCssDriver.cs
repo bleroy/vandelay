@@ -1,5 +1,7 @@
+using System;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Notify;
@@ -38,5 +40,28 @@ namespace Vandelay.Industries.Drivers {
             return Editor(part, shapeHelper);
         }
 
+        protected override void Exporting(CustomCss part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("CssClass", part.CssClass);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("CustomId", part.CustomId);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Scripts", part.Scripts);
+        }
+
+        protected override void Importing(CustomCss part, ImportContentContext context) {
+            string partName = part.PartDefinition.Name;
+
+            part.CssClass = GetAttribute<string>(context, partName, "CssClass");
+            part.CustomId = GetAttribute<string>(context, partName, "CustomId");
+            part.Scripts = GetAttribute<string>(context, partName, "Scripts");
+        }
+
+        //Using TV for generic parameter here simply to avoid confusion with T Localizer property
+        private TV GetAttribute<TV>(ImportContentContext context, string partName, string elementName) {
+            string value = context.Attribute(partName, elementName);
+            if (value != null)
+            {
+                return (TV)Convert.ChangeType(value, typeof(TV));
+            }
+            return default(TV);
+        }
     }
 }
