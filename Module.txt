@@ -2,7 +2,7 @@ Name: Vandelay Industries
 AntiForgery: enabled
 Author: Bertrand Le Roy
 Website: http://weblogs.asp.net/bleroy
-Version: 1.2
+Version: 1.2.2
 OrchardVersion: 1.2
 Description: A collection of useful Orchard modules
 FeatureName: Vandelay Meta

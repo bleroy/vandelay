@@ -16,7 +16,7 @@ namespace Vandelay.Industries.Services {
         private readonly ISettingsService _settingsService;
         private readonly ISignals _signals;
         private readonly ICacheManager _cacheManager;
-        private readonly WorkContext _workContext;
+        private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IShapeFactory _shapeFactory;
         private readonly IEnumerable<IThemeSelectionRule> _rules;
 
@@ -26,14 +26,14 @@ namespace Vandelay.Industries.Services {
             ISettingsService settingsService,
             ISignals signals,
             ICacheManager cacheManager,
-            WorkContext workContext,
+            IWorkContextAccessor workContextAccessor,
             IShapeFactory shapeFactory,
             IEnumerable<IThemeSelectionRule> rules) {
 
             _settingsService = settingsService;
             _signals = signals;
             _cacheManager = cacheManager;
-            _workContext = workContext;
+            _workContextAccessor = workContextAccessor;
             _shapeFactory = shapeFactory;
             _rules = rules;
         }
@@ -42,9 +42,10 @@ namespace Vandelay.Industries.Services {
             if (AdminFilter.IsApplied(context)) return null;
             if (_result != null) return _result;
             // If the user reverted to the default, short-circuit this
-            var session = _workContext.HttpContext.Session;
+            var workContext = _workContextAccessor.GetContext();
+            var session = workContext.HttpContext.Session;
             if (session != null &&
-                (bool)(session[_workContext.CurrentSite.SiteName + "Vandelay.ThemePicker.UseDefault"] ?? false)) {
+                (bool)(session[workContext.CurrentSite.SiteName + "Vandelay.ThemePicker.UseDefault"] ?? false)) {
                 
                 return null;
             }
@@ -63,7 +64,7 @@ namespace Vandelay.Industries.Services {
             if (selectedThemeRule == default(ThemePickerSettingsRecord)) return null;
             if (!String.IsNullOrWhiteSpace(selectedThemeRule.Zone)) {
                 dynamic linkShape = _shapeFactory.Create("Vandelay_ThemePicker_LinkToDefault");
-                var zone = _workContext.Layout.Zones[selectedThemeRule.Zone];
+                var zone = workContext.Layout.Zones[selectedThemeRule.Zone];
                 zone.Add(linkShape, selectedThemeRule.Position);
             }
             _result = new ThemeSelectorResult {
