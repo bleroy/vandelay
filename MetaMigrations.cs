@@ -33,5 +33,14 @@ namespace Vandelay.Industries {
 
             return 1;
         }
+
+        public int UpdateFrom1() {
+            SchemaBuilder.AlterTable("MetaRecord",
+                                     table => {
+                                         table.AlterColumn("Description", column => column.WithType(DbType.String).Unlimited());
+                                         table.AlterColumn("Keywords", column => column.WithType(DbType.String).Unlimited());
+                                     });
+            return 2;
+        }
     }
 }
