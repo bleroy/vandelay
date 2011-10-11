@@ -22,16 +22,6 @@ namespace Vandelay.Industries.Services {
 
     [OrchardFeature("Vandelay.TranslationManager")]
     public class LocalizationManagementService : ILocalizationManagementService {
-        private static readonly Regex ResourceStringExpression =
-            new Regex(
-                @"T\(((@"".*"")|(""([^""\\]|\\.)*?""))([^)""]*)\)",
-                RegexOptions.Multiline | RegexOptions.Compiled);
-
-        private static readonly Regex PluralStringExpression =
-            new Regex(
-                @"T.Plural\(((@"".*"")|(""([^""\\]|\\.)*?""))([^)""]*),\s*((@"".*"")|(""([^""\\]|\\.)*?""))([^)""]*)\)",
-                RegexOptions.Multiline | RegexOptions.Compiled);
-
         private static readonly Regex NamespaceExpression =
             new Regex(
                 @"namespace ([^\s]*)\s*{",
@@ -76,9 +66,10 @@ namespace Vandelay.Industries.Services {
             var translationFiles = site
                 .Files("orchard.*.po", true)
                 .Where(p =>
-                    p.Parent().FileName.Equals(cultureCode, StringComparison.OrdinalIgnoreCase) &&
-                    (extensionNames.Contains(p.MakeRelativeTo(site.Combine("Modules")).Tokens[0], StringComparer.OrdinalIgnoreCase) ||
-                     extensionNames.Contains(p.MakeRelativeTo(site.Combine("Themes")).Tokens[0], StringComparer.OrdinalIgnoreCase)))
+                       extensionNames != null &&
+                       (p.Parent().FileName.Equals(cultureCode, StringComparison.OrdinalIgnoreCase) &&
+                        (extensionNames.Contains(p.MakeRelativeTo(site.Combine("Modules")).Tokens[0], StringComparer.OrdinalIgnoreCase) ||
+                         extensionNames.Contains(p.MakeRelativeTo(site.Combine("Themes")).Tokens[0], StringComparer.OrdinalIgnoreCase))))
                 .MakeRelativeTo(site);
             return ZipExtensions.Zip(
                 translationFiles,
@@ -113,27 +104,21 @@ namespace Vandelay.Industries.Services {
                 .Where(p => {
                            var tokens = p.MakeRelativeTo(site).Tokens;
                            return new[] {"themes", "modules"}.Contains(tokens[0], StringComparer.OrdinalIgnoreCase) &&
-                           extensionNames.Contains(tokens[1], StringComparer.OrdinalIgnoreCase);
+                                  extensionNames.Contains(tokens[1], StringComparer.OrdinalIgnoreCase);
                        })
-                .Grep(
-                    ResourceStringExpression,
-                    (path, match, contents) => {
-                        var str = match.Groups[1].ToString();
-                        DispatchResourceString(zipFiles, null, null, site, path, site, contents, str);
-                    }
-                )
-                .Grep(
-                    PluralStringExpression,
-                    (path, match, contents) => {
-                        var str = match.Groups[1].ToString();
-                        DispatchResourceString(zipFiles, null, null, site, path, site, contents, str);
-                        str = match.Groups[6].ToString();
-                        DispatchResourceString(zipFiles, null, null, site, path, site, contents, str);
-                    }
-                );
+                .Read((contents, path) => ExtractResourcesFromCode(contents, null, null, site, path, zipFiles));
             return ZipExtensions.Zip(
                 new Path(zipFiles.Keys.Select(p => p.MakeRelativeTo(site))),
                 p => Encoding.UTF8.GetBytes(zipFiles[site.Combine(p)].ToString()));
+        }
+
+        private void ExtractResourcesFromCode(string contents, Path corePoPath, Path rootPoPath, Path site, Path path, Dictionary<Path, StringBuilder> zipFiles) {
+            foreach (var str in FindLocalizedStrings(contents)) {
+                DispatchResourceString(zipFiles, corePoPath, rootPoPath, site, path, site, contents, '"' + str + '"');
+            }
+            foreach (var str in FindLocalizedStrings(contents, "T.Plural(", true)) {
+                DispatchResourceString(zipFiles, corePoPath, rootPoPath, site, path, site, contents, '"' + str + '"');
+            }
         }
 
         public byte[] ExtractDefaultTranslation(string sitePath) {
@@ -164,27 +149,12 @@ namespace Vandelay.Industries.Services {
                 });
             // Extract resources from views and cs files, for the web site
             // as well as for the framework and Azure projects.
-            site.Add(site.Parent().Combine("Orchard"))
-                .Add(site.Parent().Combine("Orchard.Azure"))
+            site/*.Add(site.Parent().Combine("Orchard"))
+                .Add(site.Parent().Combine("Orchard.Azure"))*/
                 .ForEach(p =>
-                    p.Files("*", true)
-                    .WhereExtensionIs(".cshtml", ".aspx", ".ascx", ".cs")
-                    .Grep(
-                        ResourceStringExpression,
-                        (path, match, contents) => {
-                            var str = match.Groups[1].ToString();
-                            DispatchResourceString(zipFiles, corePoPath, rootPoPath, site, path, p, contents, str);
-                        }
-                    )
-                    .Grep(
-                        PluralStringExpression,
-                        (path, match, contents) => {
-                            var str = match.Groups[1].ToString();
-                            DispatchResourceString(zipFiles, corePoPath, rootPoPath, site, path, p, contents, str);
-                            str = match.Groups[6].ToString();
-                            DispatchResourceString(zipFiles, corePoPath, rootPoPath, site, path, p, contents, str);
-                        }
-                    ));
+                         p.Files("*", true)
+                             .WhereExtensionIs(".cshtml", ".aspx", ".ascx", ".cs")
+                             .Read((contents, path) => ExtractResourcesFromCode(contents, corePoPath, rootPoPath, site, path, zipFiles)));
             return ZipExtensions.Zip(
                 new Path(zipFiles.Keys.Select(p => p.MakeRelativeTo(site))),
                 p => Encoding.UTF8.GetBytes(zipFiles[site.Combine(p)].ToString()));
@@ -249,6 +219,9 @@ namespace Vandelay.Industries.Services {
                     var line = reader.ReadLine();
                     if (line != null) {
                         if (line.StartsWith("#: ")) {
+                            translation.Context = line;
+                        }
+                        if (line.StartsWith("msgctxt ")) {
                             translation.Context = line;
                         }
                         else if (line.StartsWith("#| msgid ")) {
@@ -387,9 +360,73 @@ namespace Vandelay.Industries.Services {
         private static void WriteResourceString(StringBuilder builder, string context, string key, string value) {
             builder.AppendLine("#: " + context);
             builder.AppendLine("#| msgid " + key);
+            builder.AppendLine("msgctxt " + context);
             builder.AppendLine("msgid " + value);
             builder.AppendLine("msgstr " + value);
             builder.AppendLine();
+        }
+
+        public static IEnumerable<string> FindLocalizedStrings(string csharp, string prefix = "T(", bool fetchTwoStrings = false) {
+            // This will fail on some carefully crafted comments such as /* T("ha ha! */. Well, yeah.
+            var current = 0;
+            var gotOne = false;
+            while (current >=0 && current < csharp.Length) {
+                var nextT = current;
+                if (!fetchTwoStrings || !gotOne) {
+                    // Look for next prefix.
+                    nextT = csharp.IndexOf(prefix, current);
+                    if (nextT == -1) yield break; // prefix not found, we're done.
+                    nextT += prefix.Length; // skip prefix.
+                }
+                var quote = csharp.IndexOf('"', nextT); // Where's the next quote?
+                if (quote == -1) yield break; // None found, we're done.
+                var between = csharp.Substring(nextT, quote - nextT).Replace(" ", "");
+                if (between != "" && between != "@" && !(fetchTwoStrings && gotOne && (between == "," || between == ",@"))) {
+                    // stuff found between prefix and string, skip this to next prefix.
+                    current = nextT + 1;
+                    continue;
+                }
+                nextT = quote;
+                // We should be in position to find the string, and on the opening quote.
+                if (csharp[nextT - 1] == '@'
+                    && csharp.Length > nextT + 1) { // @"..." string.
+                    var nextQuote = nextT + 1;
+                    while (nextQuote >= 0 && nextQuote < csharp.Length) {
+                        nextQuote = csharp.IndexOf('"', nextQuote);
+                        if (nextQuote != -1
+                            && csharp.Length > nextQuote + 1
+                            && csharp[nextQuote + 1] == '"') { // This is a double-quote, don't stop here.
+                            nextQuote += 2; // Skip that double-quote.
+                            continue;
+                        }
+                        if (nextQuote != -1) { // Found the end of the string.
+                            yield return csharp.Substring(nextT + 1, nextQuote - nextT - 1);
+                            current = nextQuote + 1; // prepare to find next string.
+                            gotOne = !gotOne; // If dealing with plural we need to prepare to find the second string, or switch back to finding the prefix.
+                            break;
+                        }
+                        yield break;
+                    }
+                } else {
+                    var nextQuote = nextT + 1;
+                    while (nextQuote >= 0 && nextQuote < csharp.Length) {
+                        nextQuote = csharp.IndexOf('"', nextQuote);
+                        if (nextQuote != -1
+                            && csharp[nextQuote - 1] == '\\') { // This is an escaped string, don't stop there.
+                            nextQuote++;
+                            continue;
+                        }
+                        if (nextQuote != -1) { // Found the end of the string.
+                            yield return csharp.Substring(nextT + 1, nextQuote - nextT - 1);
+                            current = nextQuote + 1; // prepare to find next string.
+                            gotOne = !gotOne; // If dealing with plural we need to prepare to find the second string, or switch back to finding the prefix.
+                            break;
+                        }
+                        yield break;
+                    }
+                }
+                if (nextT == -1) yield break;
+            }
         }
     }
 }

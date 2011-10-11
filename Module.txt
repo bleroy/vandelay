@@ -22,21 +22,26 @@ Features:
         Description: Enables Feedburner RSS feeds
         Category: Syndication
         Dependencies: Routable, Feeds
+    Vandelay.RemoteRss:
+        Name: Vandelay Remote RSS
+        Description: Include remote RSS feeds into your Orchard sites
+        Category: Syndication
+        Dependencies: Feeds
     Vandelay.TagCloud:
         Name: Vandelay Tag Cloud
         Description: A simple tag cloud widget and result pages for your Orchard sites.
-        Dependencies: Orchard.Tags
         Category: Navigation
+        Dependencies: Orchard.Tags
     Vandelay.TagRss:
         Name: Vandelay Tag RSS
         Description: Adds RSS feeds to tags.
-        Dependencies: Orchard.Tags, Feeds
         Category: Syndication
+        Dependencies: Orchard.Tags, Feeds
     Vandelay.ThemePicker:
         Name: Vandelay Theme Picker
         Description: Pick a different theme based on the user agent.
-		Dependencies: Orchard.Themes
         Category: Design
+		Dependencies: Orchard.Themes
     Vandelay.TranslationManager:
         Name: Vandelay Translation Manager
         Description: Translation management tools
