@@ -16,6 +16,7 @@ namespace Vandelay.Industries.Drivers {
         }
 
         protected override DriverResult Display(MetaPart part, string displayType, dynamic shapeHelper) {
+            if (displayType != "Detail") return null;
             var resourceManager = _wca.GetContext().Resolve<IResourceManager>();
             if (!String.IsNullOrWhiteSpace(part.Description)) {
                 resourceManager.SetMeta(new MetaEntry {
