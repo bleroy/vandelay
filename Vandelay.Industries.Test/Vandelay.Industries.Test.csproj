@@ -52,11 +52,11 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Orchard.Web\Modules\Vandelay.Industries\Vandelay.Industries.csproj">
+    <ProjectReference Include="..\Vandelay.Industries.csproj">
       <Project>{8AD14CA5-56CD-4B94-89FD-3330AA758131}</Project>
       <Name>Vandelay.Industries</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Orchard\Orchard.Framework.csproj">
+    <ProjectReference Include="..\..\..\..\Orchard\Orchard.Framework.csproj">
       <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
       <Name>Orchard.Framework</Name>
     </ProjectReference>
