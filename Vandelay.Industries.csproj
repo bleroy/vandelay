@@ -40,13 +40,11 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fluent.IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Fluent.IO.dll</HintPath>
+    <Reference Include="Fluent.IO">
+      <HintPath>Libraries\Fluent.IO.dll</HintPath>
     </Reference>
-    <Reference Include="Fluent.Zip, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\Fluent.Zip.dll</HintPath>
+    <Reference Include="Fluent.Zip">
+      <HintPath>Libraries\Fluent.Zip.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73">
       <SpecificVersion>False</SpecificVersion>
@@ -63,8 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\rss.png" />
-    <Content Include="Lib\Fluent.IO.dll" />
-    <Content Include="Lib\Fluent.Zip.dll" />
     <Content Include="Recipes\AddFeedburnerToBlogs.recipe.xml" />
     <Content Include="Vandelay.gif" />
     <Content Include="Web.config" />
