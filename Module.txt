@@ -19,9 +19,14 @@ Features:
 		Category: Content
 		Dependencies: Orchard.Media, Settings
     Vandelay.Feedburner:
+        Name: Vandelay Feedburner
         Description: Enables Feedburner RSS feeds
         Category: Syndication
         Dependencies: Routable, Feeds
+    Vandelay.RelativeUrlFilter:
+        Name: Vandelay Relative URL Filter
+        Description: Transforms image source and link hrefs into absolute URLs, for example to avoid broken images in Feedburner.
+        Category: Content
     Vandelay.RemoteRss:
         Name: Vandelay Remote RSS
         Description: Include remote RSS feeds into your Orchard sites

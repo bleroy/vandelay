@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,8 @@
     <Compile Include="ExtractLocalizedStringsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AssertHelper.cs" />
+    <Compile Include="RelativeUrlHtmlFilterTest.cs" />
+    <Compile Include="Stubs\StubWorkContextAccessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
