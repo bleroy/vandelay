@@ -41,7 +41,7 @@ namespace Vandelay.Industries.Filters {
             }
         }
 
-        private void MakeAbsolute(HtmlAttribute attr, Uri baseUrl) {
+        private static void MakeAbsolute(HtmlAttribute attr, Uri baseUrl) {
             var url = attr.Value;
             if (!url.StartsWith("http:", StringComparison.OrdinalIgnoreCase)
                 && !url.StartsWith("https:", StringComparison.OrdinalIgnoreCase)
