@@ -97,6 +97,7 @@
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Commands\LocalizationManagementCommands.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\FailController.cs" />
     <Compile Include="Controllers\SessionThemeController.cs" />
     <Compile Include="ClassyMigrations.cs" />
     <Compile Include="Drivers\RemoteRssPartDriver.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Handlers\RemoteRssPartHandler.cs" />
     <Compile Include="Models\RemoteRssPart.cs" />
     <Compile Include="RemoteRssMigrations.cs" />
+    <Compile Include="Routes\FailRouteProvider.cs" />
     <Compile Include="Services\RemoteRssService.cs" />
     <Compile Include="ThemePickerMigrations.cs" />
     <Compile Include="TagCloudMigrations.cs" />
@@ -190,6 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Parts\RemoteRss.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\NotFound.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

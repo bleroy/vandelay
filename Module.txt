@@ -13,6 +13,10 @@ Features:
         Name: Vandelay Classy
         Description: Add ids, classes and scripts to the rendering of your content items through this part that can be added to any content type.
 		Category: Designer
+    Vandelay.Fail:
+        Name: Vandelay Fail
+        Description: Simulates an exception on the /fail route. Useful to test your error pages. It also exposes a /notfound route that can be used to have themed and multi-tenant-aware custom not found pages, by pointing custom errors in web.config to it.
+        Category: Debug
     Vandelay.Favicon:
         Name: Vandelay Favicon
         Description: Adds a favicon setting to site settings
