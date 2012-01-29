@@ -15,5 +15,10 @@ namespace Vandelay.Industries.Controllers {
             HttpContext.Response.StatusCode = 404;
             return View();
         }
+
+        public ActionResult Error() {
+            HttpContext.Response.StatusCode = 404;
+            return View();
+        }
     }
 }

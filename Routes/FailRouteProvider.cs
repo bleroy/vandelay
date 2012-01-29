@@ -41,6 +41,20 @@ namespace Vandelay.Industries.Routes {
                                                                                       {"area", "Vandelay.Industries"}
                                                          },
                                                          new MvcRouteHandler())
+                             },
+                             new RouteDescriptor {   Priority = 10,
+                                                     Route = new Route(
+                                                         "error",
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "Vandelay.Industries"},
+                                                                                      {"controller", "Fail"},
+                                                                                      {"action", "Error"}
+                                                         },
+                                                         new RouteValueDictionary(),
+                                                         new RouteValueDictionary {
+                                                                                      {"area", "Vandelay.Industries"}
+                                                         },
+                                                         new MvcRouteHandler())
                              }
                          };
         }
