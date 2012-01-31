@@ -13,12 +13,12 @@ namespace Vandelay.Industries.Controllers {
 
         public ActionResult NotFound() {
             HttpContext.Response.StatusCode = 404;
-            return View();
+            return View("NotFound");
         }
 
         public ActionResult Error() {
-            HttpContext.Response.StatusCode = 404;
-            return View();
+            HttpContext.Response.StatusCode = 500;
+            return View("ErrorPage");
         }
     }
 }
