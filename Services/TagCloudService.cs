@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Orchard;
+using Orchard.Autoroute.Models;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.Core.Common.Models;
-using Orchard.Core.Routable.Models;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Tags.Models;
@@ -53,12 +53,12 @@ namespace Vandelay.Industries.Services {
                                   }
                                   else {
                                       var container = _contentManager
-                                          .Query<RoutePart, RoutePartRecord>()
+                                          .Query<AutoroutePart, AutoroutePartRecord>()
                                           .ForVersion(VersionOptions.Published)
-                                          .Where(c => c.Slug == slug)
+                                          .Where(c => c.DisplayAlias == slug)
                                           .List()
                                           .FirstOrDefault();
-                                      if (container == default(RoutePart)) return new List<TagCount>();
+                                      if (container == default(AutoroutePart)) return new List<TagCount>();
                                       tagCounts = _contentManager
                                           .Query<TagsPart, TagsPartRecord>(VersionOptions.Published)
                                           .Join<CommonPartRecord>()
