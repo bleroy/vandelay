@@ -98,7 +98,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminMenu.cs" />
+    <Compile Include="Menus\ContentAdminMenu.cs" />
+    <Compile Include="Menus\ThemePickerAdminMenu.cs" />
     <Compile Include="Commands\LocalizationManagementCommands.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FailController.cs" />

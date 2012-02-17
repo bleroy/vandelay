@@ -26,7 +26,7 @@ Features:
         Name: Vandelay Feedburner
         Description: Enables Feedburner RSS feeds
         Category: Syndication
-        Dependencies: Routable, Feeds
+        Dependencies: Alias, Feeds
     Vandelay.RelativeUrlFilter:
         Name: Vandelay Relative URL Filter
         Description: Transforms image source and link hrefs into absolute URLs, for example to avoid broken images in Feedburner.
@@ -55,3 +55,7 @@ Features:
         Name: Vandelay Translation Manager
         Description: Translation management tools
         Category: Localization
+    Vandelay.ContentAdminMenu:
+        Name: Vandelay Content Admin Menu
+        Description: Adds an admin menu entry per content type under the "Content" header.
+        Category: Content

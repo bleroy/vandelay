@@ -3,9 +3,9 @@ using Orchard.Localization;
 using Orchard.Themes;
 using Orchard.UI.Navigation;
 
-namespace Vandelay.Industries {
+namespace Vandelay.Industries.Menus {
     [OrchardFeature("Vandelay.ThemePicker")]
-    public class AdminMenu : INavigationProvider {
+    public class ThemePickerAdminMenu : INavigationProvider {
         public Localizer T { get; set; }
         public string MenuName { get { return "admin"; } }
 
