@@ -26,7 +26,7 @@ Features:
         Name: Vandelay Feedburner
         Description: Enables Feedburner RSS feeds
         Category: Syndication
-        Dependencies: Alias, Feeds
+        Dependencies: Orchard.Alias, Feeds
     Vandelay.RelativeUrlFilter:
         Name: Vandelay Relative URL Filter
         Description: Transforms image source and link hrefs into absolute URLs, for example to avoid broken images in Feedburner.
