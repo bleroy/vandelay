@@ -15,6 +15,12 @@ namespace Vandelay.Industries.Drivers {
             _wca = workContextAccessor;
         }
 
+        protected override string Prefix {
+            get {
+                return "meta";
+            }
+        }
+
         protected override DriverResult Display(MetaPart part, string displayType, dynamic shapeHelper) {
             if (displayType != "Detail") return null;
             var resourceManager = _wca.GetContext().Resolve<IResourceManager>();
