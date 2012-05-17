@@ -59,3 +59,7 @@ Features:
         Name: Vandelay Content Admin Menu
         Description: Adds an admin menu entry per content type under the "Content" header.
         Category: Content
+    Vandelay.UserStorage:
+        Name: Vandelay User Storage
+        Description: Provides a user-specific key value data store.
+        Category: Developer

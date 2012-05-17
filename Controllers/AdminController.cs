@@ -9,7 +9,6 @@ using Orchard.Localization;
 using Orchard.UI.Admin;
 using Vandelay.Industries.Services;
 using Vandelay.Industries.ViewModels;
-using Permissions = Orchard.Themes.Permissions;
 
 namespace Vandelay.Industries.Controllers {
     [Admin]
@@ -40,7 +39,7 @@ namespace Vandelay.Industries.Controllers {
         public Localizer T { get; set; }
 
         public ActionResult Index() {
-            if (!Services.Authorizer.Authorize(Permissions.ApplyTheme, T("Cannot manage themes")))
+            if (!Services.Authorizer.Authorize(Orchard.Themes.Permissions.ApplyTheme, T("Cannot manage themes")))
                 return new HttpUnauthorizedResult();
 
             var viewModel = new ThemePickerIndexViewModel {
@@ -66,7 +65,7 @@ namespace Vandelay.Industries.Controllers {
             string zone,
             string position) {
 
-            if (!Services.Authorizer.Authorize(Permissions.ApplyTheme, T("Cannot manage themes")))
+            if (!Services.Authorizer.Authorize(Orchard.Themes.Permissions.ApplyTheme, T("Cannot manage themes")))
                 return new HttpUnauthorizedResult();
 
             _settingsService.Add(name, ruleType, criterion, theme, priority, zone, position);
@@ -76,7 +75,7 @@ namespace Vandelay.Industries.Controllers {
 
         [HttpPost]
         public ActionResult Remove(FormCollection form) {
-            if (!Services.Authorizer.Authorize(Permissions.ApplyTheme, T("Cannot manage themes")))
+            if (!Services.Authorizer.Authorize(Orchard.Themes.Permissions.ApplyTheme, T("Cannot manage themes")))
                 return new HttpUnauthorizedResult();
 
             var id = int.Parse(form.GetKey(0).Substring(1));
