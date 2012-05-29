@@ -9,6 +9,7 @@ using Vandelay.Industries.Models;
 namespace Vandelay.Industries.Services {
     public interface IUserStorageService : IDependency {
         string Load(string folder, string fileName, string userName = null);
+        IDictionary<string, string> Load(string folder, IEnumerable<string> fileNames, string userName = null);
         void Save(string folder, string fileName, string value, string userName = null);
         IEnumerable<string> GetUsers();
         IEnumerable<string> GetFolders(string userName = null);
@@ -37,6 +38,18 @@ namespace Vandelay.Industries.Services {
                 r.FileName == fileName);
             if (record == null) return null;
             return record.Contents;
+        }
+
+        public IDictionary<string, string> Load(string folder, IEnumerable<string> fileNames, string userName = null) {
+            userName = EnsureUserName(userName);
+            return _repository
+                .Table
+                .Where(
+                    f =>
+                    f.Folder == folder &&
+                    f.UserName == userName &&
+                    fileNames.Contains(f.FileName))
+                .ToDictionary(f => f.FileName, f => f.Contents);
         }
 
         private string EnsureUserName(string userName) {
