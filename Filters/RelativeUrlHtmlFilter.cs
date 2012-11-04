@@ -15,7 +15,7 @@ namespace Vandelay.Industries.Filters {
             _wca = wca;
         }
 
-        public string ProcessContent(string text, string flavor) {
+        public string ProcessContent(string text) {
             var wc = _wca.GetContext();
             var baseUrl = wc.CurrentSite.BaseUrl;
             if (string.IsNullOrWhiteSpace(baseUrl)) return text;
