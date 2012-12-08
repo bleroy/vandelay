@@ -219,12 +219,6 @@
     <Content Include="Views\Parts\RemoteRss.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\NotFound.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ErrorPage.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\UserStorage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
