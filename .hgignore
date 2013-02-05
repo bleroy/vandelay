@@ -1,0 +1,5 @@
+syntax: glob
+bin
+Vandelay.Industries.Test/obj
+obj
+*.csproj.user

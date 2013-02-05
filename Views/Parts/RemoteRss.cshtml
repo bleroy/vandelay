@@ -1,0 +1,12 @@
+﻿@using System.Xml.Linq
+@{
+    var feed = Model.Feed as XElement;
+}
+<ul>
+@foreach(var item in feed
+    .Element("channel")
+    .Elements("item")
+    .Take((int)Model.ItemsToDisplay)) {
+    <li><a href="@item.Element("link").Value">@item.Element("title").Value</a></li>
+}
+</ul>

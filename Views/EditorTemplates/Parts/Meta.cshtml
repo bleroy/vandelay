@@ -1,0 +1,23 @@
+﻿@using Vandelay.Industries.Models
+@model MetaPart
+
+<fieldset>
+  <legend>SEO Meta Data</legend>
+            
+  <div class="editor-label">
+    @Html.LabelFor(model => model.Keywords)
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.Keywords, new { @class = "large text" })
+    @Html.ValidationMessageFor(model => model.Keywords)
+  </div>
+
+  <div class="editor-label">
+    @Html.LabelFor(model => model.Description)
+  </div>
+  <div class="editor-field">
+    @Html.TextAreaFor(model => model.Description)
+    @Html.ValidationMessageFor(model => model.Description)
+  </div>
+            
+</fieldset>

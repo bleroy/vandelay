@@ -1,0 +1,14 @@
+<Placement>
+    <Place Parts_CustomCss_Edit="Content:1.2"/>
+    <Place Parts_Favicon_FaviconSettings="Content:5"/>
+    <Match DisplayType="SummaryAdmin">
+        <Place Parts_Feedburner="-"/>
+    </Match>
+    <Place Parts_Feedburner="Content:0"/>
+    <Place Parts_Feedburner_Edit="Content:7.8"/>
+    <Place Parts_Meta_Edit="Content:2.1"/>
+    <Place Parts_RemoteRss="Content:1.1"/>
+    <Place Parts_RemoteRss_Edit="Content:1.1"/>
+    <Place Parts_TagCloud="Content:1.1"/>
+    <Place Parts_TagCloud_Edit="Content:7.1"/>
+</Placement>

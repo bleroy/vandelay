@@ -1,0 +1,17 @@
+﻿.user-storage-navigation {
+    float: left;
+    margin-right: 32px;
+}
+.user-storage-details-fields {
+    clear: none;
+    display: inline-block;
+}
+.user-storage-details-fields {
+    clear: none;
+}
+.user-storage-folder-list, .user-storage-file-list {
+    padding-left: 16px;
+}
+.user-storage-buttons {
+    clear: both;
+}

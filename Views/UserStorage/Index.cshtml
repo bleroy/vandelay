@@ -1,0 +1,82 @@
+﻿@using Vandelay.Industries.ViewModels;
+@model UserStorageAdminViewModel
+@{
+    Style.Include("UserStorageAdmin.css");
+}
+
+<h1>@Html.TitleForPage(T("Manage user storage").ToString())</h1>
+
+<fieldset class="user-storage-navigation">
+    <ul class="user-storage-user-list">
+        @foreach(var userName in Model.UserNames.OrderBy(s => s)) {
+            if (userName == Model.UserName) {
+                <li class="user-storage-user selected">
+                    @userName
+                    @if (Model.Folders != null) {
+                        <ul class="user-storage-folder-list">
+                            @foreach (var folder in Model.Folders.OrderBy(s => s)) {
+                                if (folder == Model.Folder) {
+                                    <li class="user-storage-folder selected">
+                                        @folder
+                                        @if (Model.FileNames != null) {
+                                            <ul class="user-storage-file-list">
+                                                @foreach (var fileName in Model.FileNames.OrderBy(s => s)) {
+                                                    if (fileName == Model.FileName) {
+                                                        <li class="user-storage-file">@fileName</li>
+                                                    }
+                                                    else {
+                                                        <li class="user-storage-file">
+                                                            @Html.ActionLink(@fileName, "Index", new {
+                                                                userName, folder, fileName
+                                                            })
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                                else {
+                                    <li class="user-storage-folder selected">
+                                        @Html.ActionLink(@folder, "Index", new {
+                                            userName, folder
+                                        })
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+            else {
+                <li class="user-storage-folder selected">
+                    @Html.ActionLink(@userName, "Index", new {userName})
+                </li>
+            }
+            <li></li>
+        }
+    </ul>
+</fieldset>
+<div class="user-storage-details">
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Index"))) {
+        <fieldset class="user-storage-details-fields">
+            @Html.ValidationSummary()
+            <label class="sub" for="userName">@T("User name")</label><br />
+            @Html.TextBoxFor(m => m.UserName, new { @class = "text" })<br />
+            <label class="sub" for="folder">@T("Folder")</label><br />
+            @Html.TextBoxFor(m => m.Folder, new { @class = "text" })<br />
+            <label class="sub" for="fileName">@T("File name")</label><br />
+            @Html.TextBoxFor(m => m.FileName, new { @class = "text" })<br />
+            <label class="sub" for="contents">@T("Contents")</label><br />
+            @Html.TextAreaFor(m => m.Contents, 20, 80, new { @class = "text" })
+        </fieldset>
+        <div class="user-storage-buttons">
+            <fieldset class="save-button">
+                <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save")</button>
+            </fieldset>
+            <fieldset class="delete-button">
+                <button type="submit" name="submit.Delete" value="@T("Delete")" itemprop="RemoveUrl">@T("Delete")</button>
+            </fieldset>
+        </div>
+    }
+</div>
