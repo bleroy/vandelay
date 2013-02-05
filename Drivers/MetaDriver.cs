@@ -2,6 +2,7 @@
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.UI.Resources;
 using Vandelay.Industries.Models;
@@ -52,6 +53,16 @@ namespace Vandelay.Industries.Drivers {
         protected override DriverResult Editor(MetaPart part, IUpdateModel updater, dynamic shapeHelper) {
             updater.TryUpdateModel(part, Prefix, null, null);
             return Editor(part, shapeHelper);
+        }
+
+        protected override void Exporting(MetaPart part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Keywords", part.Record.Keywords);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("Description", part.Record.Description);
+        }
+
+        protected override void Importing(MetaPart part, ImportContentContext context) {
+            part.Record.Keywords = context.Attribute(part.PartDefinition.Name, "Keywords");
+            part.Record.Description = context.Attribute(part.PartDefinition.Name, "Description");
         }
     }
 }
