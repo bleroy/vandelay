@@ -1,0 +1,33 @@
+﻿@using Vandelay.Industries.Models
+@model RemoteRssPart
+
+<fieldset>
+  <legend>Remote RSS Feed</legend>
+            
+  <div class="editor-label">
+    @Html.LabelFor(model => model.RemoteRssUrl, T("Remote RSS Url"))
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.RemoteRssUrl)
+    @Html.ValidationMessageFor(model => model.RemoteRssUrl)
+  </div>
+  <span class="hint">@T("The URL of a remote RSS or Atom feed. You may need to override Views/Parts/RemoteRss.cshtml, depending on the form of the particular feed you are displaying.")</span>
+            
+  <div class="editor-label">
+    @Html.LabelFor(model => model.ItemsToDisplay, T("Number of Items"))
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.ItemsToDisplay)
+    @Html.ValidationMessageFor(model => model.ItemsToDisplay)
+  </div>
+  <span class="hint">@T("The number of feed items to display. If this is set to more than what the feed returns, then less than that number will be displayed.")</span>
+            
+  <div class="editor-label">
+    @Html.LabelFor(model => model.CacheDuration, T("Cache Duration"))
+  </div>
+  <div class="editor-field">
+    @Html.TextBoxFor(model => model.CacheDuration)
+    @Html.ValidationMessageFor(model => model.CacheDuration)
+  </div>
+  <span class="hint">@T("The number of minutes the site waits before attempting to refresh the feed from live data.")</span>
+</fieldset>

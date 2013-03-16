@@ -1,0 +1,18 @@
+@using Vandelay.Industries.Models
+@model CustomCss
+
+<div>
+    @Html.LabelFor(m => m.CustomId, @T("Custom id"))
+    @Html.TextBoxFor(m => m.CustomId)
+    <span class="hint">@T("You may specify here the id of the outer tag for this content item.")</span>
+</div>
+<div>
+    @Html.LabelFor(m => m.CssClass, @T("Css Class"))
+    @Html.TextBoxFor(m => m.CssClass, new { @class = "large text" })
+    <span class="hint">@T("You may specify here a list of CSS classes separated by spaces that will be added to the outer tag for this content item.")</span>
+</div>
+<div>
+    @Html.LabelFor(m => m.Scripts, @T("Script URLs"))
+    @Html.TextAreaFor(m => m.Scripts)
+    <span class="hint">@T("You may specify here a list of scripts to include when this content item is displayed. Each script will be included only once even if more than one item requires it. Enter one script per line. A script can be the name of a registered script such as \"jQuery\" or the URL of any script, such as \"~/Themes/MyTheme/scripts/foo.js\".")</span>
+</div>
