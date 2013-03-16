@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Routing;
-using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
+using Orchard.ContentManagement.MetaData.Models;
 using Orchard.Core.Contents;
 using Orchard.Core.Contents.Settings;
-using Orchard.Core.Contents.ViewModels;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
-using Permissions = Orchard.Themes.Permissions;
 
 namespace Vandelay.Industries.Menus {
     [OrchardFeature("Vandelay.ContentAdminMenu")]
     public class ContentAdminMenu : INavigationProvider {
         private readonly IContentDefinitionManager _contentDefinitionManager;
-        private readonly IContentManager _contentManager;
 
-        public ContentAdminMenu(IContentDefinitionManager contentDefinitionManager, IContentManager contentManager) {
+        public ContentAdminMenu(IContentDefinitionManager contentDefinitionManager) {
             _contentDefinitionManager = contentDefinitionManager;
-            _contentManager = contentManager;
         }
 
         public Localizer T { get; set; }
@@ -43,16 +39,16 @@ namespace Vandelay.Industries.Menus {
                             if (string.Compare(
                                 contentTypeDefinition.Settings["ContentTypeSettings.Creatable"],
                                 "true", StringComparison.OrdinalIgnoreCase) == 0) {
-
+                                ContentTypeDefinition definition = contentTypeDefinition;
                                 menu.Add(T(contentTypeDefinition.DisplayName), "5", item =>
                                     item.Action("List", "Admin",
                                     new RouteValueDictionary {
                                         {"area", "Contents"},
-                                        {"model.Id", contentTypeDefinition.Name}
+                                        {"model.Id", definition.Name}
                                     })
                                     .Permission(DynamicPermissions.CreateDynamicPermission(
                                         DynamicPermissions.PermissionTemplates["PublishOwnContent"],
-                                        contentTypeDefinition)));
+                                        definition)));
                             }
                         }
                     });

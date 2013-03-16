@@ -36,6 +36,11 @@ namespace Vandelay.Industries.Handlers {
                     if (script.EndsWith(".js", StringComparison.OrdinalIgnoreCase)) {
                         _resourceManager.Value.Include("script", script, null);
                     }
+
+                    else if (script.EndsWith(".css", StringComparison.OrdinalIgnoreCase)) {
+                        _resourceManager.Value.Include("stylesheet", script, null);
+                    }
+
                     else {
                         _resourceManager.Value.Require("script", script);
                     }
