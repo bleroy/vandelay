@@ -77,11 +77,11 @@ namespace Vandelay.Industries.Services {
         }
 
         public byte[] ExtractDefaultTranslation(string sitePath, IEnumerable<string> extensionNames) {
-            if (extensionNames == null || extensionNames.Count() == 0) {
+            if (extensionNames == null || !extensionNames.Any()) {
                 return ExtractDefaultTranslation(sitePath);
             }
             var site = Path.Get(sitePath);
-            var zipFiles = new Dictionary<Path, StringBuilder>();
+            var zipFiles = new Dictionary<Path, StringEntryBuilder>();
             // Extract resources for module manifests
             site.Files("module.txt", true)
                 .Where(p => extensionNames.Contains(p.Parent().FileName, StringComparer.OrdinalIgnoreCase))
@@ -112,7 +112,7 @@ namespace Vandelay.Industries.Services {
                 p => Encoding.UTF8.GetBytes(zipFiles[site.Combine(p)].ToString()));
         }
 
-        private void ExtractResourcesFromCode(string contents, Path corePoPath, Path rootPoPath, Path site, Path path, Dictionary<Path, StringBuilder> zipFiles) {
+        private void ExtractResourcesFromCode(string contents, Path corePoPath, Path rootPoPath, Path site, Path path, Dictionary<Path, StringEntryBuilder> zipFiles) {
             foreach (var str in FindLocalizedStrings(contents)) {
                 DispatchResourceString(zipFiles, corePoPath, rootPoPath, site, path, site, contents, '"' + str + '"');
             }
@@ -130,7 +130,7 @@ namespace Vandelay.Industries.Services {
             var rootPoPath = site.Combine(
                 "App_Data", "Localization", "en-US",
                 "orchard.root.po");
-            var zipFiles = new Dictionary<Path, StringBuilder>();
+            var zipFiles = new Dictionary<Path, StringEntryBuilder>();
             // Extract resources for module manifests
             site.Files("module.txt", true)
                 .Read((content, path) => {
@@ -177,34 +177,34 @@ namespace Vandelay.Industries.Services {
                                            using (var writer = new StreamWriter(outStream)) {
                                                foreach (var englishTranslation in englishTranslations) {
                                                    var entry = englishTranslation;
-                                                   var translation = translations.Where(
-                                                       t => t.Context == entry.Context &&
-                                                            t.Key == entry.Key).FirstOrDefault();
-                                                   if (translation == default(StringEntry) ||
-                                                       translation.Translation == null ||
-                                                       translation.Translation.Equals(@"msgstr """"")) {
-
-                                                       writer.WriteLine("# Untranslated string");
-                                                   }
-                                                   writer.WriteLine(entry.Context);
-                                                   writer.WriteLine(entry.Key);
-                                                   writer.WriteLine(entry.English);
-                                                   if (translation != null) {
-                                                       translation.Used = true;
-                                                       writer.WriteLine(translation.Translation);
+                                var translation = translations.FirstOrDefault(t => t.UniqueKey == entry.UniqueKey);
+                                if (translation == null) {
+                                    translation = StringEntry.Parse(entry.ToString());
+                                    translation.Translation = @"msgstr """"";
                                                    }
                                                    else {
-                                                       writer.WriteLine("msgstr \"\"");
+                                    if (translation.Comment != null && translation.Comment.Contains("# Untranslated string"))
+                                        translation.Comment = translation.Comment.Replace("# Untranslated string", string.Empty); //remove previous untraslated comment if any
+                                    translation.Used = true;
+                                }
+                                translation.Scope = entry.Scope; //fix case
+                                translation.Context = entry.Context; //fix case
+                                if (translation.Translation.Equals(@"msgstr """"")) {
+                                    var findAny = translations.Where(t => t.Id == entry.Id);
+                                    var find = findAny.FirstOrDefault(any => any.Translation != @"msgstr """"" && any.Translation != translation.Translation);
+                                    if (find != null) {
+                                        //picks new scopes from translated one and states it on comment
+                                        translation.Translation = find.Translation;
+                                        translation.Comment = "# Picked from: " + find.Scope;
                                                    }
-                                                   writer.WriteLine();
+                                    else
+                                        translation.Comment = "# Untranslated string";
+                                }
+                                writer.WriteLine(translation);
                                                }
                                                foreach (var translation in translations.Where(t => !t.Used)) {
-                                                   writer.WriteLine("# Obsolete translation");
-                                                   writer.WriteLine(translation.Context);
-                                                   writer.WriteLine(translation.Key);
-                                                   writer.WriteLine(translation.English);
-                                                   writer.WriteLine(translation.Translation);
-                                                   writer.WriteLine();
+                                translation.Comment = "# Obsolete translation";
+                                writer.WriteLine(translation);
                                                }
                                            }
                                        }, FileMode.Create, FileAccess.Write, FileShare.None);
@@ -212,40 +212,29 @@ namespace Vandelay.Industries.Services {
         }
 
         private static void ReadTranslations(FileStream inStream, List<StringEntry> translations) {
-            var translation = new StringEntry();
+            var currentEntry = new StringBuilder();
             var comparer = new StringEntryEqualityComparer();
             using (var reader = new StreamReader(inStream)) {
                 while (!reader.EndOfStream) {
                     var line = reader.ReadLine();
-                    if (line != null) {
-                        if (line.StartsWith("#: ")) {
-                            translation.Context = line;
+                    if (!string.IsNullOrWhiteSpace(line)) {
+                        currentEntry.AppendLine(line);
                         }
-                        if (line.StartsWith("msgctxt ")) {
-                            translation.Context = line;
-                        }
-                        else if (line.StartsWith("#| msgid ")) {
-                            translation.Key = line;
-                        }
-                        else if (line.StartsWith("msgid ")) {
-                            translation.English = line;
-                        }
-                        else if (line.StartsWith("msgstr ")) {
-                            translation.Translation = line;
+                    else {
+                        var translation = StringEntry.Parse(currentEntry.ToString());
                             if (!translations.Contains(translation, comparer)) {
                                 translations.Add(translation);
                             }
-                            translation = new StringEntry();
-                        }
+                        currentEntry = new StringBuilder();
                     }
                 }
             }
         }
 
-        private static StringBuilder GetBuilder(IDictionary<Path, StringBuilder> fileCatalog, Path path) {
-            StringBuilder entry;
+        private static StringEntryBuilder GetBuilder(IDictionary<Path, StringEntryBuilder> fileCatalog, Path path) {
+            StringEntryBuilder entry;
             if (!fileCatalog.ContainsKey(path)) {
-                entry = new StringBuilder();
+                entry = new StringEntryBuilder();
                 fileCatalog.Add(path, entry);
             }
             else {
@@ -255,7 +244,7 @@ namespace Vandelay.Industries.Services {
         }
 
         private static void DispatchResourceString(
-            IDictionary<Path, StringBuilder> fileCatalog,
+            IDictionary<Path, StringEntryBuilder> fileCatalog,
             Path corePoPath,
             Path rootPoPath,
             Path sitePath,
@@ -289,7 +278,7 @@ namespace Vandelay.Industries.Services {
         private static readonly Regex FeatureNameExpression = new Regex(@"^\s+([^\s:]+):\s*$");
 
         private static void ExtractPoFromManifest(
-            IDictionary<Path, StringBuilder> fileCatalog,
+            IDictionary<Path, StringEntryBuilder> fileCatalog,
             Path poPath,
             string manifest,
             Path manifestPath,
@@ -304,13 +293,13 @@ namespace Vandelay.Industries.Services {
                 var split = line.Split(new[] {':'}, 2, StringSplitOptions.RemoveEmptyEntries)
                     .Select(s => s.Trim()).ToArray();
                 if (split.Length == 2) {
-                    var key = split[0];
-                    if (new[] {"Name", "Description", "Author", "Website", "Tags"}.Contains(key)) {
+                    var comment = split[0];
+                    if (new[] { "Name", "Description", "Author", "Website", "Tags" }.Contains(comment)) {
                         var value = split[1];
                         WriteResourceString(
                             builder,
                             context,
-                            '"' + key + '"',
+                            '"' + comment + '"',
                             '"' + value + '"');
                     }
                 }
@@ -325,13 +314,13 @@ namespace Vandelay.Industries.Services {
                         split = line.Split(new[] { ':' }, 2, StringSplitOptions.RemoveEmptyEntries)
                             .Select(s => s.Trim()).ToArray();
                         if (split.Length != 2) continue;
-                        var key = split[0];
-                        if (new[] { "Name", "Description", "Category" }.Contains(key)) {
+                        var comment = split[0];
+                        if (new[] { "Name", "Description", "Category" }.Contains(comment)) {
                             var value = split[1];
                             WriteResourceString(
                                 builder,
                                 context,
-                                '"' + feature + '.' + key + "\"",
+                                '"' + feature + '.' + comment + "\"",
                                 '"' + value + '"');
                         }
                     }
@@ -353,17 +342,28 @@ namespace Vandelay.Industries.Services {
                 "orchard.module.po");
         }
 
-        private static void WriteResourceString(StringBuilder builder, string context, string value) {
-             WriteResourceString(builder, context, value, value);
+        private static bool WriteResourceString(StringEntryBuilder builder, string context, string value) {
+            return WriteResourceString(builder, context, value, value);
         }
 
-        private static void WriteResourceString(StringBuilder builder, string context, string key, string value) {
-            builder.AppendLine("#: " + context);
-            builder.AppendLine("#| msgid " + key);
-            builder.AppendLine("msgctxt " + context);
-            builder.AppendLine("msgid " + value);
-            builder.AppendLine("msgstr " + value);
-            builder.AppendLine();
+        private static bool WriteResourceString(StringEntryBuilder builder, string context, string comment, string value) {
+            var translation = new StringEntry()
+            {
+                Usage = !string.IsNullOrEmpty(comment) && comment != value ? String.Format("#. {0}", comment) : string.Empty,
+                Context = String.Format("msgctxt {0}", context),
+                Id = String.Format("msgid {0}", value),
+                Translation = String.Format("msgstr {0}", value)
+            };
+
+            if (!builder.ContainsKey(translation)) {
+                builder.Add(translation);
+                return true;
+            }
+            translation = builder[translation.UniqueKey];
+            var newComment = String.Format("#. {0}", comment);
+            if (!translation.Usage.Contains(newComment))
+                translation.Usage += String.Format("\r\n{0}", newComment);
+            return false;
         }
 
         public static IEnumerable<string> FindLocalizedStrings(string csharp, string prefix = "T(", bool fetchTwoStrings = false) {
