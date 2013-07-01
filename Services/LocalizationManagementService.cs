@@ -349,10 +349,11 @@ namespace Vandelay.Industries.Services {
         private static bool WriteResourceString(StringEntryBuilder builder, string context, string comment, string value) {
             var translation = new StringEntry()
             {
-                Usage = !string.IsNullOrEmpty(comment) && comment != value ? String.Format("#. {0}", comment) : string.Empty,
-                Context = String.Format("msgctxt {0}", context),
-                Id = String.Format("msgid {0}", value),
-                Translation = String.Format("msgstr {0}", value)
+                Usage = !string.IsNullOrEmpty(comment) && comment != value ?
+                    "#. " + comment : string.Empty,
+                Context = "msgctxt " + context,
+                Id = "msgid " + value,
+                Translation = "msgstr " + value
             };
 
             if (!builder.ContainsKey(translation)) {
@@ -360,9 +361,9 @@ namespace Vandelay.Industries.Services {
                 return true;
             }
             translation = builder[translation.UniqueKey];
-            var newComment = String.Format("#. {0}", comment);
+            var newComment = "#. " + comment;
             if (!translation.Usage.Contains(newComment))
-                translation.Usage += String.Format("\r\n{0}", newComment);
+                translation.Usage += "\r\n" + newComment;
             return false;
         }
 
