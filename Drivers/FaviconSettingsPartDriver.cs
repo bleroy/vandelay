@@ -1,6 +1,7 @@
 ﻿using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Vandelay.Industries.Models;
 using Vandelay.Industries.Services;
@@ -36,6 +37,14 @@ namespace Vandelay.Industries.Drivers {
             updater.TryUpdateModel(part.Record, Prefix, null, null);
             _signals.Trigger("Vandelay.Favicon.Changed");
             return Editor(part, shapeHelper);
+        }
+
+        protected override void Exporting(FaviconSettingsPart part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("FaviconUrl", part.Record.FaviconUrl);
+        }
+
+        protected override void Importing(FaviconSettingsPart part, ImportContentContext context) {
+            part.Record.FaviconUrl = context.Attribute(part.PartDefinition.Name, "FaviconUrl");
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Vandelay.Industries.Models;
 using Vandelay.Industries.Services;
@@ -54,6 +55,14 @@ namespace Vandelay.Industries.Drivers {
                 _signals.Trigger(key);
             }
             return Editor(part, shapeHelper);
+        }
+
+        protected override void Exporting(FeedburnerPart part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("FeedburnerUrl", part.Record.FeedburnerUrl);
+        }
+
+        protected override void Importing(FeedburnerPart part, ImportContentContext context) {
+            part.Record.FeedburnerUrl = context.Attribute(part.PartDefinition.Name, "FeedburnerUrl");
         }
     }
 }

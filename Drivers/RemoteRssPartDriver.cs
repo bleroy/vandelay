@@ -1,5 +1,7 @@
-﻿using Orchard.ContentManagement;
+﻿using System;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Vandelay.Industries.Models;
 using Vandelay.Industries.Services;
@@ -47,6 +49,18 @@ namespace Vandelay.Industries.Drivers {
 
             updater.TryUpdateModel(part, Prefix, null, null);
             return Editor(part, shapeHelper);
+        }
+
+        protected override void Exporting(RemoteRssPart part, ExportContentContext context) {
+            context.Element(part.PartDefinition.Name).SetAttributeValue("CacheDuration", part.Record.CacheDuration);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("ItemsToDisplay", part.Record.ItemsToDisplay);
+            context.Element(part.PartDefinition.Name).SetAttributeValue("RemoteRssUrl", part.Record.RemoteRssUrl);
+        }
+
+        protected override void Importing(RemoteRssPart part, ImportContentContext context) {
+            part.Record.CacheDuration = Convert.ToInt32(context.Attribute(part.PartDefinition.Name, "CacheDuration"));
+            part.Record.ItemsToDisplay = Convert.ToInt32(context.Attribute(part.PartDefinition.Name, "ItemsToDisplay"));
+            part.Record.RemoteRssUrl = context.Attribute(part.PartDefinition.Name, "RemoteRssUrl");
         }
     }
 }
