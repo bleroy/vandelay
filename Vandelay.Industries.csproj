@@ -117,7 +117,6 @@
     <Compile Include="Menus\ThemePickerAdminMenu.cs" />
     <Compile Include="Commands\LocalizationManagementCommands.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\FailController.cs" />
     <Compile Include="Controllers\SessionThemeController.cs" />
     <Compile Include="ClassyMigrations.cs" />
     <Compile Include="Drivers\RemoteRssPartDriver.cs" />
@@ -127,7 +126,6 @@
     <Compile Include="Models\UserStorageRecord.cs" />
     <Compile Include="Permissions\UserStoragePermissions.cs" />
     <Compile Include="RemoteRssMigrations.cs" />
-    <Compile Include="Routes\FailRouteProvider.cs" />
     <Compile Include="Services\RemoteRssService.cs" />
     <Compile Include="Services\UserStorageService.cs" />
     <Compile Include="ThemePickerMigrations.cs" />
