@@ -4,7 +4,7 @@ using System.Linq;
 using Orchard;
 using Orchard.Caching;
 using Orchard.Environment.Extensions;
-using Orchard.Media.Services;
+using Orchard.MediaLibrary.Services;
 using Vandelay.Industries.Models;
 
 namespace Vandelay.Industries.Services {
@@ -18,11 +18,12 @@ namespace Vandelay.Industries.Services {
         private readonly IWorkContextAccessor _wca;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
-        private readonly IMediaService _mediaService;
+        private readonly IMediaLibraryService _mediaService;
 
         private const string FaviconMediaFolder = "favicon";
 
-        public FaviconService(IWorkContextAccessor wca, ICacheManager cacheManager, ISignals signals, IMediaService mediaService) {
+        public FaviconService(IWorkContextAccessor wca, ICacheManager cacheManager, ISignals signals, IMediaLibraryService mediaService)
+        {
             _wca = wca;
             _cacheManager = cacheManager;
             _signals = signals;
@@ -52,7 +53,7 @@ namespace Vandelay.Industries.Services {
             if (rootMediaFolders.Any()) {
                 faviconSuggestions = new List<string>(
                     _mediaService.GetMediaFiles(FaviconMediaFolder)
-                        .Select(f => _mediaService.GetPublicUrl(FaviconMediaFolder + "/" + f.Name)));
+                        .Select(f => _mediaService.GetMediaPublicUrl(FaviconMediaFolder, f.Name)));
             }
             return faviconSuggestions;
         }
