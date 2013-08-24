@@ -28,7 +28,9 @@ namespace Vandelay.Industries.Drivers {
         protected override DriverResult Display(FeedburnerPart part, string displayType, dynamic shapeHelper) {
             if (!string.IsNullOrWhiteSpace(part.FeedburnerUrl)) {
                 return ContentShape("Parts_Feedburner", () => shapeHelper.Parts_Feedburner(
-                    FeedburnerUrl: part.FeedburnerUrl));
+                    FeedburnerUrl: part.FeedburnerUrl,
+                    ContentPart: part,
+                    ContentItem: part.ContentItem));
             }
             return new DriverResult();
         }

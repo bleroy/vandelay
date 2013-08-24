@@ -16,7 +16,10 @@ namespace Vandelay.Industries.Drivers {
         }
         protected override DriverResult Display(TagCloudPart part, string displayType, dynamic shapeHelper) {
             return ContentShape("Parts_TagCloud",
-                () => shapeHelper.Parts_TagCloud(TagCounts: part.TagCounts));
+                () => shapeHelper.Parts_TagCloud(
+                    TagCounts: part.TagCounts,
+                    ContentPart: part,
+                    ContentItem: part.ContentItem));
         }
 
         //GET
