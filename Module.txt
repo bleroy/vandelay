@@ -17,7 +17,7 @@ Features:
         Name: Vandelay Favicon
         Description: Adds a favicon setting to site settings
 		Category: Content
-		Dependencies: Orchard.Media, Settings
+		Dependencies: Orchard.MediaLibrary, Settings
     Vandelay.Feedburner:
         Name: Vandelay Feedburner
         Description: Enables Feedburner RSS feeds
