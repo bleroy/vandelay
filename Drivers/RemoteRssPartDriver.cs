@@ -27,6 +27,7 @@ namespace Vandelay.Industries.Drivers {
                     RemoteRssUrl: part.RemoteRssUrl,
                     ItemsToDisplay: part.ItemsToDisplay,
                     Feed: _remoteRss.GetFeed(part),
+                    ContentPart: part,
                     ContentItem: part.ContentItem
                     ));
             }
