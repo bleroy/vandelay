@@ -65,7 +65,7 @@ namespace Vandelay.Industries.Services {
                                           .Where(t => t.Container.Id == container.Id)
                                           .List()
                                           .SelectMany(t => t.CurrentTags)
-                                          .GroupBy(t => t.TagName)
+                                          .GroupBy(t => t)
                                           .Select(g => new TagCount {
                                               TagName = g.Key,
                                               Count = g.Count()
