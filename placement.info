@@ -1,6 +1,7 @@
 <Placement>
     <Place Parts_CustomCss_Edit="Content:1.2"/>
     <Place Parts_Favicon_FaviconSettings="Content:5"/>
+    <Place Parts_SplashScreenSettings="Content:5"/>
     <Match DisplayType="SummaryAdmin">
         <Place Parts_Feedburner="-"/>
     </Match>

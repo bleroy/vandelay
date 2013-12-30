@@ -1,0 +1,55 @@
+﻿@using Vandelay.Industries.Models;
+@model SplashScreenSettingsPart
+@{
+    Script.Require("OrchardMarkdown");
+    Style.Require("OrchardMarkdown");
+    Script.Require("jQueryColorBox");
+    Script.Require("OrchardMarkdown-MediaLibrary");
+    Style.Require("jQueryColorBox");
+
+    var idPostfix = Html.IdFor(m => m.SplashScreenContents);
+}
+<fieldset>
+    <legend>@T("Splash Screen")</legend>
+    <div>
+        @Html.CheckBoxFor(p => p.Enabled)
+        <label for="@Html.IdFor(p => p.Enabled)" class="forcheckbox">@T("Enable Splash Screen")</label>
+    </div>
+    <div>
+        <label for="@Html.IdFor(p => p.SplashScreenContents)">@T("Splash Screen Contents")</label>
+        <div class="wmd-box has-grip">
+            <div class="wmd-innerbox">
+                <div class="wmd-editor-box">
+                    <div id="wmd-button-bar-@idPostfix" class="wmd-button-bar"></div>
+
+                    @Html.TextAreaFor(p => p.SplashScreenContents, 25, 80,
+                        new Dictionary<string, object> {
+                            {"id", "wmd-input" + "-" + idPostfix},
+                            {"class", "wmd-input"},
+                            {"data-mediapicker-uploadpath", ""},
+                            {"data-mediapicker-title", T("Insert/Update Media")}
+                        })
+                </div>
+
+                <div class="wmd-preview-box" style="padding-top:30px;">
+                    <div id="wmd-preview-@idPostfix" class="wmd-panel wmd-preview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <label for="@Html.IdFor(p => p.AcceptButtonText)">@T("Accept Button Text")</label>
+        @Html.TextBoxFor(m => m.AcceptButtonText)
+        <span class="hint">@T("The text for the button that will accept the terms and enable the user to enter the site.")</span>
+    </div>
+    <div>
+        <label for="@Html.IdFor(p => p.RejectButtonText)">@T("Reject Button Text")</label>
+        @Html.TextBoxFor(m => m.RejectButtonText)
+        <span class="hint">@T("The text for the button that will reject the terms and redirect the user out of the site. Leave blank if there should be no reject button.")</span>
+    </div>
+    <div>
+        <label for="@Html.IdFor(p => p.RedirectUrl)">@T("Reject Redirect URL")</label>
+        @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "text-medium" })
+        <span class="hint">@T("The URL where the reject button will lead.")</span>
+    </div>
+</fieldset>
