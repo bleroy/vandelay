@@ -61,6 +61,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\dotnetzip\Ionic.Zip.dll</HintPath>
     </Reference>
+    <Reference Include="MarkdownSharp">
+      <HintPath>..\..\..\..\lib\markdown\MarkdownSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -118,7 +121,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SplashScreenController.cs" />
     <Compile Include="Controllers\UserStorageController.cs" />
+    <Compile Include="Drivers\SplashScreenSettingsPartDriver.cs" />
+    <Compile Include="Filters\SplashScreenFilter.cs" />
+    <Compile Include="Handlers\SplashScreenSettingsPartHandler.cs" />
     <Compile Include="Menus\ContentAdminMenu.cs" />
     <Compile Include="Menus\UserStorageAdminMenu.cs" />
     <Compile Include="Menus\ThemePickerAdminMenu.cs" />
@@ -130,9 +137,11 @@
     <Compile Include="Filters\RelativeUrlHtmlFilter.cs" />
     <Compile Include="Handlers\RemoteRssPartHandler.cs" />
     <Compile Include="Models\RemoteRssPart.cs" />
+    <Compile Include="Models\SplashScreenSettingsPart.cs" />
     <Compile Include="Models\UserStorageRecord.cs" />
     <Compile Include="Permissions\UserStoragePermissions.cs" />
     <Compile Include="RemoteRssMigrations.cs" />
+    <Compile Include="Routes\SplashScreenRoutes.cs" />
     <Compile Include="Services\RemoteRssService.cs" />
     <Compile Include="Services\UserStorageService.cs" />
     <Compile Include="ThemePickerMigrations.cs" />
@@ -179,6 +188,7 @@
     <Compile Include="Shapes\FaviconShapes.cs" />
     <Compile Include="UserStorageMigrations.cs" />
     <Compile Include="ViewModels\FaviconSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SplashScreenViewModel.cs" />
     <Compile Include="ViewModels\ThemePickerIndexViewModel.cs" />
     <Compile Include="ViewModels\UserStorageAdminViewModel.cs" />
   </ItemGroup>
@@ -228,6 +238,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Styles\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\SplashScreenSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\SplashScreen\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,17 @@
+﻿@model Vandelay.Industries.ViewModels.SplashScreenViewModel
+
+<div class="splash-screen-content">
+    @Html.Raw(Model.SplashScreenContents)
+</div>
+
+@using (Html.BeginFormAntiForgeryPost(
+    Url.Action("Accept", "SplashScreen", new {
+        area = "Vandelay.Industries",
+        returnUrl = Model.ReturnUrl
+    }),
+    FormMethod.Post)) {
+    <input type="submit" class="button" value="@T(Model.AcceptButtonText)"/>
+    if (!String.IsNullOrWhiteSpace(Model.RejectButtonText)) {
+        <a href="@Model.RedirectUrl">@T(Model.RejectButtonText)</a>
+    }
+}
