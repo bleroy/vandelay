@@ -52,4 +52,10 @@
         @Html.TextBoxFor(m => m.RedirectUrl, new { @class = "text-medium" })
         <span class="hint">@T("The URL where the reject button will lead.")</span>
     </div>
+    <div>
+        <label>@T("Ignored urls")</label>
+        @Html.TextAreaFor(p => p.IgnoredUrls, new { @class = "text medium" })
+        <span class="hint">@T("This must be a set of relative paths, e.g., /, /About. Please ensure that you enter only one path per line.")</span>
+        <span class="hint">@T("You can add comments by starting the line with #.")</span>
+    </div>
 </fieldset>
