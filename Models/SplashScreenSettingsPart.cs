@@ -13,7 +13,7 @@ namespace Vandelay.Industries.Models {
 
         public string SplashScreenContents {
             get { return this.Retrieve(p => p.SplashScreenContents); }
-            set { this.Store(p => p.SplashScreenContents, value);}
+            set { this.Store(p => p.SplashScreenContents, value); }
         }
 
         public string AcceptButtonText {
@@ -28,7 +28,12 @@ namespace Vandelay.Industries.Models {
 
         public string RedirectUrl {
             get { return this.Retrieve(p => p.RedirectUrl); }
-            set { this.Store(p => p.RedirectUrl, value);}
+            set { this.Store(p => p.RedirectUrl, value); }
+        }
+
+        public string IgnoredUrls {
+            get { return this.Retrieve(x => x.IgnoredUrls); }
+            set { this.Store(x => x.IgnoredUrls, value); }
         }
     }
 }
