@@ -27,6 +27,20 @@ namespace Vandelay.Industries.Routes {
                             {"area", "Vandelay.Industries"}
                         },
                         new MvcRouteHandler())
+                },
+                new RouteDescriptor {
+                    Route = new Route(
+                        "resetsplashscreen",
+                        new RouteValueDictionary {
+                            {"area", "Vandelay.Industries"},
+                            {"controller", "SplashScreen"},
+                            {"action", "Reset"}
+                        },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                            {"area", "Vandelay.Industries"}
+                        },
+                        new MvcRouteHandler())
                 }
             };
         }
