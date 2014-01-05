@@ -44,7 +44,22 @@ namespace Vandelay.Industries.Controllers {
                     });
                 }
             }
-            return Redirect(returnUrl);
+            return Redirect(returnUrl ?? "~/");
+        }
+
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult Reset(string returnUrl = null) {
+            if (Response != null) {
+                var cookies = Response.Cookies;
+                if (cookies != null) {
+                    cookies.Add(new HttpCookie(SplashScreenSettingsPart.CookieName) {
+                        Expires = DateTime.Now.AddYears(-1),
+                        HttpOnly = false,
+                        Secure = false
+                    });
+                }
+            }
+            return Redirect(returnUrl ?? "~/");
         }
     }
 }
