@@ -5,18 +5,18 @@ namespace Vandelay.Industries.Models {
     [OrchardFeature("Vandelay.Classy")]
     public class CustomCss : ContentPart<CustomCssRecord> {
         public string CustomId {
-            get { return Record.CustomId; }
-            set { Record.CustomId = value; }
+            get { return Retrieve(r =>r.CustomId); }
+            set { Store(r => r.CustomId, value); }
         }
 
         public string CssClass {
-            get { return Record.CssClass; }
-            set { Record.CssClass = value; }
+            get { return Retrieve(r => r.CssClass); }
+            set { Store(r => r.CssClass, value); }
         }
 
         public string Scripts {
-            get { return Record.Scripts; }
-            set { Record.Scripts = value; }
+            get { return Retrieve(r => r.Scripts); }
+            set { Store(r => r.Scripts, value); }
         }
     }
 }
