@@ -1,0 +1,70 @@
+﻿#results, #pinned-items {
+    &>li {
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        border: solid 1px #ccc;
+        background-color: white;
+        margin: 4px;
+        padding: 4px;
+        width: 300px;
+        height: 80px;
+        overflow: hidden;
+        cursor: move;
+
+        .remove-pinned, .pin {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ccc;
+            padding: 2px 4px;
+            opacity: 0.3;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .summary {
+        input, .metadata, .related, .remove {
+            display: none;
+        }
+        h3, .contentType {
+            margin: 0;
+            display: inline;
+        }
+    }
+}
+
+#pinned-items {
+    min-height: 80px;
+
+    &.pinned-drag-hover {
+        cursor: move;
+    }
+
+    &>li.placeholder {
+        display: block;
+        height: auto;
+        width: auto;
+        border: none;
+        cursor: default;
+        background-color: transparent;
+
+        .remove-pinned {
+            display: none;
+        }
+    }
+}
+
+#results {
+    clear: both;
+}
+
+#pager {
+    li {
+        display: inline;
+        margin: 4px;
+    }
+}
