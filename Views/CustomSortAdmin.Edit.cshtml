@@ -1,0 +1,61 @@
+﻿@using System.Globalization
+@using System.Linq
+@using Orchard.Core.Title.Models
+@using Vandelay.Industries.Models
+@{
+    Layout.Title = T("Edit Custom Sort Order").Text;
+
+    Style.Include("admin-custom-sort.css", "admin-custom-sort.min.css");
+    Script.Require("jQuery");
+    Script.Require("jQueryUI_Sortable");
+    Script.Require("jQueryUI_Draggable");
+    Script.Require("jQueryUI_Droppable");
+    Script.Include("admin-custom-sort.js", "admin-custom-sort.min.js");
+    
+    var sortOrder = Model.SortOrder as CustomSortRecord;
+    var queries = Model.Queries as IEnumerable<TitlePart>;
+    var pinnedItems = Model.PinnedItems;
+    var pinnedItemIds = Model.PinnedItemIds as int[];
+}
+
+@using (Html.BeginFormAntiForgeryPost()) {
+    @Html.ValidationSummary()
+    @Html.Hidden("pinnedItems", String.Join(",", pinnedItemIds))
+    <fieldset>
+        <label for="@Html.Id("Name")">@T("Display Name")</label>
+        @Html.TextBox("Name", sortOrder.Name, new { @class = "text medium" })
+        <span class="hint">@T("Name of the custom sort order as it will be displayed in the admin.")</span>
+    </fieldset>
+    <fieldset>
+        <legend>@T("Pinned items")</legend>
+        @if (pinnedItems.Items != null && ((IEnumerable<object>)pinnedItems.Items).Any<object>()) {
+            @Display(pinnedItems)
+        }
+        else {
+            <ol id="pinned-items">
+                <li class="placeholder hint">@T("Drop content items here to define their fixed custom order.")</li>
+            </ol>
+        }
+    </fieldset>
+    <fieldset>
+        <button class="primaryAction" type="submit">@T("Save")</button>
+        <a href="@Url.Action("Index")" class="button">@T("Cancel")</a>
+    </fieldset>
+    <fieldset>
+        <legend>@T("Add items")</legend>
+        <span class="hint">@T("Select a query, then drag and drop items into the pinned items to force their sort order.")</span>
+        @Html.DropDownList("Query",
+            queries.Select(q => new SelectListItem {
+                Text = q.Title,
+                Value = q.Id.ToString(CultureInfo.InvariantCulture)
+            }),
+            T("Please pick a query").Text, null)
+    </fieldset>
+    <ol id="results"></ol>
+    <ol id="pager"></ol>
+}
+<script type="text/javascript">
+    window.customSortQueryUrlPattern = "@(Url.Action("QueryResults"))";
+    window.customSortRemoveText = "@T("&times;")";
+    window.customSortPinText = "@T("+")";
+</script>
