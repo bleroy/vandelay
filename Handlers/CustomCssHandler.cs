@@ -6,6 +6,7 @@ using Orchard.Environment;
 using Orchard.Environment.Extensions;
 using Orchard.UI.Resources;
 using Vandelay.Industries.Models;
+using Vandelay.Industries.Settings;
 
 namespace Vandelay.Industries.Handlers {
     [OrchardFeature("Vandelay.Classy")]
@@ -20,17 +21,28 @@ namespace Vandelay.Industries.Handlers {
         protected override void BuildDisplayShape(BuildDisplayContext context) {
             if (context.DisplayType == "Detail" && context.ContentItem.Has(typeof(CustomCss))) {
                 var customCss = context.ContentItem.As<CustomCss>();
+                var settings = customCss.Settings.GetModel<CustomCssSettings>();
                 var classes = customCss.CssClass;
+                if (String.IsNullOrWhiteSpace(classes)) {
+                    classes = settings.CssClass;
+                }
                 if (!String.IsNullOrWhiteSpace(classes)) {
                     foreach (var cssClass in classes.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) {
                         context.Shape.Classes.Add(cssClass);
                     }
                 }
                 var id = customCss.CustomId;
+                if (String.IsNullOrWhiteSpace(id)) {
+                    id = settings.CustomId;
+                }
                 if (!String.IsNullOrWhiteSpace(id)) {
                     context.Shape.Attributes.Add("id", id);
                 }
-                var scripts = (customCss.Scripts ?? String.Empty)
+                var scriptList = customCss.Scripts;
+                if (String.IsNullOrWhiteSpace(scriptList)) {
+                    scriptList = settings.Scripts;
+                }
+                var scripts = (scriptList ?? String.Empty)
                     .Split(new[] {' ', '\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var script in scripts) {
                     if (script.EndsWith(".js", StringComparison.OrdinalIgnoreCase)) {

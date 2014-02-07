@@ -3,7 +3,7 @@
 
 <div>
     @Html.LabelFor(m => m.CustomId, @T("Custom id"))
-    @Html.TextBoxFor(m => m.CustomId)
+    @Html.TextBoxFor(m => m.CustomId, new { @class = "medium text" })
     <span class="hint">@T("You may specify here the id of the outer tag for this content item.")</span>
 </div>
 <div>
