@@ -13,6 +13,15 @@ Features:
         Name: Vandelay Classy
         Description: Add ids, classes and scripts to the rendering of your content items through this part that can be added to any content type.
 		Category: Designer
+    Vandelay.ContentAdminMenu:
+        Name: Vandelay Content Admin Menu
+        Description: Adds an admin menu entry per content type under the "Content" header.
+        Category: Content
+    Vandelay.CustomSort:
+        Name: Vandelay Custom Sort
+        Description: Drag and drop content items to create custom sort orders that can then be used in projections.
+        Category: Content
+        Dependencies: Orchard.Projections
     Vandelay.Favicon:
         Name: Vandelay Favicon
         Description: Adds a favicon setting to site settings
@@ -32,6 +41,11 @@ Features:
         Description: Include remote RSS feeds into your Orchard sites
         Category: Syndication
         Dependencies: Feeds
+    Vandelay.SplashScreen:
+        Name: Vandelay Splash Screen
+        Description: Displays a splash screen to all first-time users.
+        Category: Navigation
+        Dependencies: Markdown, Orchard.MediaLibrary
     Vandelay.TagCloud:
         Name: Vandelay Tag Cloud
         Description: A simple tag cloud widget and result pages for your Orchard sites.
@@ -51,16 +65,7 @@ Features:
         Name: Vandelay Translation Manager
         Description: Translation management tools
         Category: Localization
-    Vandelay.ContentAdminMenu:
-        Name: Vandelay Content Admin Menu
-        Description: Adds an admin menu entry per content type under the "Content" header.
-        Category: Content
     Vandelay.UserStorage:
         Name: Vandelay User Storage
         Description: Provides a user-specific key value data store.
         Category: Developer
-    Vandelay.SplashScreen:
-        Name: Vandelay Splash Screen
-        Description: Displays a splash screen to all first-time users.
-        Category: Navigation
-        Dependencies: Markdown, Orchard.MediaLibrary
