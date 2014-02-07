@@ -11,8 +11,8 @@ namespace Vandelay.Industries.Models {
     [OrchardFeature("Vandelay.Feedburner")]
     public class FeedburnerPart : ContentPart<FeedburnerPartRecord> {
         public string FeedburnerUrl {
-            get { return Record.FeedburnerUrl; }
-            set { Record.FeedburnerUrl = value; }
+            get { return Retrieve(r => r.FeedburnerUrl); }
+            set { Store(r => r.FeedburnerUrl, value); }
         }
     }
 }

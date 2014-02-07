@@ -6,13 +6,13 @@ namespace Vandelay.Industries.Models {
     [OrchardFeature("Vandelay.Industries")]
     public class MetaPart : ContentPart<MetaRecord> {
         public string Keywords {
-            get { return Record.Keywords; }
-            set { Record.Keywords = value; }
+            get { return Retrieve(r => r.Keywords); }
+            set { Store(r => r.Keywords, value); }
         }
 
         public string Description {
-            get { return Record.Description; }
-            set { Record.Description = value; }
+            get { return Retrieve(r => r.Description); }
+            set { Store(r => r.Description, value); }
         }
     }
 
