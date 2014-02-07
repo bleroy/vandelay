@@ -64,7 +64,7 @@ namespace Vandelay.Industries.Handlers {
 
         private void SetupTagCloudLoader(ContentItem item) {
             var cloudPart = (TagCloudPart) item.Get(typeof (TagCloudPart));
-            cloudPart._tagCounts.Loader(tags =>
+            cloudPart.TagCountField.Loader(tags =>
             _tagCloudService.GetPopularTags(cloudPart.Buckets, cloudPart.Slug).ToList());
         }
     }

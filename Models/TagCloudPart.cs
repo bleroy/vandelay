@@ -6,18 +6,18 @@ using Orchard.Environment.Extensions;
 namespace Vandelay.Industries.Models {
     [OrchardFeature("Vandelay.TagCloud")]
     public class TagCloudPart : ContentPart<TagCloudRecord> {
-        internal readonly LazyField<IList<TagCount>> _tagCounts = new LazyField<IList<TagCount>>();
+        internal readonly LazyField<IList<TagCount>> TagCountField = new LazyField<IList<TagCount>>();
 
-        public IList<TagCount> TagCounts { get { return _tagCounts.Value; } }
+        public IList<TagCount> TagCounts { get { return TagCountField.Value; } }
 
         public int Buckets { 
-            get { return Record.Buckets; }
-            set { Record.Buckets = value; }
+            get { return Retrieve(r => r.Buckets); }
+            set { Store(r => r.Buckets, value); }
         }
 
         public string Slug {
-            get { return Record.Slug; }
-            set { Record.Slug = value; }
+            get { return Retrieve(r => r.Slug); }
+            set { Store(r => r.Slug, value); }
         }
     }
 }

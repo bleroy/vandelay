@@ -18,18 +18,18 @@ namespace Vandelay.Industries.Models {
     [OrchardFeature("Vandelay.RemoteRss")]
     public class RemoteRssPart : ContentPart<RemoteRssPartRecord> {
         public string RemoteRssUrl {
-            get { return Record.RemoteRssUrl; }
-            set { Record.RemoteRssUrl = value; }
+            get { return Retrieve(r => r.RemoteRssUrl); }
+            set { Store(r => r.RemoteRssUrl, value); }
         }
 
         public int ItemsToDisplay {
-            get { return Record.ItemsToDisplay; }
-            set { Record.ItemsToDisplay = value; }
+            get { return Retrieve(r => r.ItemsToDisplay); }
+            set { Store(r => r.ItemsToDisplay, value); }
         }
 
         public int CacheDuration {
-            get { return Record.CacheDuration; }
-            set { Record.CacheDuration = value; }
+            get { return Retrieve(r => r.CacheDuration); }
+            set { Store(r => r.CacheDuration, value); }
         }
     }
 }
