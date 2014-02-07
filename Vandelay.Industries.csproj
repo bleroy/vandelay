@@ -91,12 +91,28 @@
   <ItemGroup>
     <Content Include="Content\rss.png" />
     <Content Include="Recipes\AddFeedburnerToBlogs.recipe.xml" />
+    <Content Include="packages.config" />
+    <Content Include="Scripts\admin-custom-sort.min.js.map">
+      <DependentUpon>admin-custom-sort.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\admin-custom-sort.js" />
+    <Content Include="Scripts\admin-custom-sort.min.js">
+      <DependentUpon>admin-custom-sort.js</DependentUpon>
+    </Content>
+    <Content Include="Styles\admin-custom-sort.css">
+      <DependentUpon>admin-custom-sort.less</DependentUpon>
+    </Content>
+    <Content Include="Styles\admin-custom-sort.min.css">
+      <DependentUpon>admin-custom-sort.css</DependentUpon>
+    </Content>
     <Content Include="Styles\UserStorageAdmin.css" />
     <Content Include="Vandelay.gif" />
     <Content Include="Web.config" />
-    <Content Include="Views\Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
     <Content Include="Module.txt" />
+    <Content Include="Views\CustomSortAdmin.Index.cshtml" />
+    <Content Include="Views\CustomSortAdmin.Create.cshtml" />
+    <Content Include="Views\CustomSortAdmin.Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Orchard\Orchard.Framework.csproj">
@@ -115,6 +131,10 @@
       <Project>{73a7688a-5bd3-4f7e-adfa-ce36c5a10e3b}</Project>
       <Name>Orchard.MediaLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.Projections\Orchard.Projections.csproj">
+      <Project>{5531e894-d259-45a3-aa61-26dbe720c1ce}</Project>
+      <Name>Orchard.Projections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Orchard.Tags\Orchard.Tags.csproj">
       <Project>{5D0F00F0-26C9-4785-AD61-B85710C60EB0}</Project>
       <Name>Orchard.Tags</Name>
@@ -126,32 +146,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SplashScreenController.cs" />
+    <Compile Include="Controllers\CustomSortAdminController.cs" />
     <Compile Include="Controllers\UserStorageController.cs" />
     <Compile Include="Drivers\SplashScreenSettingsPartDriver.cs" />
     <Compile Include="Filters\SplashScreenFilter.cs" />
     <Compile Include="Handlers\SplashScreenSettingsPartHandler.cs" />
+    <Compile Include="Menus\CustomSortAdminMenu.cs" />
     <Compile Include="Menus\ContentAdminMenu.cs" />
     <Compile Include="Menus\UserStorageAdminMenu.cs" />
     <Compile Include="Menus\ThemePickerAdminMenu.cs" />
     <Compile Include="Commands\LocalizationManagementCommands.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\SessionThemeController.cs" />
-    <Compile Include="ClassyMigrations.cs" />
+    <Compile Include="Migrations\CustomSortMigrations.cs" />
+    <Compile Include="Migrations\ClassyMigrations.cs" />
     <Compile Include="Drivers\RemoteRssPartDriver.cs" />
     <Compile Include="Filters\RelativeUrlHtmlFilter.cs" />
     <Compile Include="Handlers\RemoteRssPartHandler.cs" />
+    <Compile Include="Models\CustomSortOrderRecord.cs" />
+    <Compile Include="Models\CustomSortRecord.cs" />
     <Compile Include="Models\RemoteRssPart.cs" />
     <Compile Include="Models\SplashScreenSettingsPart.cs" />
     <Compile Include="Models\UserStorageRecord.cs" />
     <Compile Include="Permissions\UserStoragePermissions.cs" />
-    <Compile Include="RemoteRssMigrations.cs" />
+    <Compile Include="Migrations\RemoteRssMigrations.cs" />
+    <Compile Include="Providers\SortCriteria\CustomSortCriteria.cs" />
     <Compile Include="Routes\SplashScreenRoutes.cs" />
+    <Compile Include="Services\CustomSortService.cs" />
     <Compile Include="Services\RemoteRssService.cs" />
     <Compile Include="Services\UserStorageService.cs" />
-    <Compile Include="ThemePickerMigrations.cs" />
-    <Compile Include="TagCloudMigrations.cs" />
-    <Compile Include="FeedburnerMigrations.cs" />
-    <Compile Include="FaviconMigrations.cs" />
+    <Compile Include="Settings\CustomCssSettings.cs" />
+    <Compile Include="Migrations\ThemePickerMigrations.cs" />
+    <Compile Include="Migrations\TagCloudMigrations.cs" />
+    <Compile Include="Migrations\FeedburnerMigrations.cs" />
+    <Compile Include="Migrations\FaviconMigrations.cs" />
     <Compile Include="Drivers\CustomCssDriver.cs" />
     <Compile Include="Drivers\FaviconSettingsPartDriver.cs">
       <SubType>Code</SubType>
@@ -166,7 +194,7 @@
     <Compile Include="Handlers\FeedburnerPartHandler.cs" />
     <Compile Include="Handlers\MetaHandler.cs" />
     <Compile Include="Handlers\TagCloudHandler.cs" />
-    <Compile Include="MetaMigrations.cs" />
+    <Compile Include="Migrations\MetaMigrations.cs" />
     <Compile Include="Models\CustomCss.cs" />
     <Compile Include="Models\CustomCssRecord.cs" />
     <Compile Include="Models\FaviconSettingsPart.cs" />
@@ -190,7 +218,7 @@
     <Compile Include="Services\ThemePickerThemeSelector.cs" />
     <Compile Include="Services\UserAgentThemeSelectionRule.cs" />
     <Compile Include="Shapes\FaviconShapes.cs" />
-    <Compile Include="UserStorageMigrations.cs" />
+    <Compile Include="Migrations\UserStorageMigrations.cs" />
     <Compile Include="ViewModels\FaviconSettingsViewModel.cs" />
     <Compile Include="ViewModels\SplashScreenViewModel.cs" />
     <Compile Include="ViewModels\ThemePickerIndexViewModel.cs" />
@@ -248,6 +276,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\SplashScreen\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DefinitionTemplates\CustomCssSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Styles\admin-custom-sort.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
