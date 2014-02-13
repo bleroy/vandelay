@@ -25,7 +25,7 @@
             }),
         pin = function(itemElement) {
             var newId = getItemId(itemElement);
-            if ($.inArray(newId, pinnedItems) !== -1) return;
+            if (isNaN(newId) || $.inArray(newId, pinnedItems) !== -1) return;
             pinned.find(".placeholder").remove();
             itemElement
                 .clone()
