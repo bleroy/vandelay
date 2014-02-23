@@ -89,9 +89,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\rss.png" />
-    <Content Include="Recipes\AddFeedburnerToBlogs.recipe.xml" />
-    <Content Include="packages.config" />
     <Content Include="Scripts\admin-custom-sort.min.js.map">
       <DependentUpon>admin-custom-sort.js</DependentUpon>
     </Content>
@@ -177,44 +174,27 @@
     <Compile Include="Services\UserStorageService.cs" />
     <Compile Include="Settings\CustomCssSettings.cs" />
     <Compile Include="Migrations\ThemePickerMigrations.cs" />
-    <Compile Include="Migrations\TagCloudMigrations.cs" />
-    <Compile Include="Migrations\FeedburnerMigrations.cs" />
     <Compile Include="Migrations\FaviconMigrations.cs" />
     <Compile Include="Drivers\CustomCssDriver.cs" />
     <Compile Include="Drivers\FaviconSettingsPartDriver.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Drivers\FeedburnerPartDriver.cs" />
     <Compile Include="Drivers\MetaDriver.cs" />
-    <Compile Include="Drivers\TagCloudDriver.cs" />
-    <Compile Include="Feeds\TagFeedQuery.cs" />
-    <Compile Include="Filters\TagRssFilter.cs" />
     <Compile Include="Handlers\CustomCssHandler.cs" />
     <Compile Include="Handlers\FaviconSettingsPartHandler.cs" />
-    <Compile Include="Handlers\FeedburnerPartHandler.cs" />
     <Compile Include="Handlers\MetaHandler.cs" />
-    <Compile Include="Handlers\TagCloudHandler.cs" />
     <Compile Include="Migrations\MetaMigrations.cs" />
     <Compile Include="Models\CustomCss.cs" />
     <Compile Include="Models\CustomCssRecord.cs" />
     <Compile Include="Models\FaviconSettingsPart.cs" />
     <Compile Include="Models\FaviconSettingsPartRecord.cs" />
-    <Compile Include="Models\Feed.cs" />
-    <Compile Include="Models\FeedburnerPart.cs" />
     <Compile Include="Models\MetaPart.cs" />
     <Compile Include="Models\ThemePickerSettingsRecord.cs" />
     <Compile Include="Models\StringEntry.cs" />
-    <Compile Include="Models\TagCloudPart.cs" />
-    <Compile Include="Models\TagCloudRecord.cs" />
-    <Compile Include="Models\TagCount.cs" />
-    <Compile Include="Services\DefaultFeedDataProvider.cs" />
     <Compile Include="Services\FaviconService.cs" />
-    <Compile Include="Services\FeedburnerFeedManager.cs" />
-    <Compile Include="Services\IFeedDataProvider.cs" />
     <Compile Include="Services\IThemeSelectionRule.cs" />
     <Compile Include="Services\LocalizationManagementService.cs" />
     <Compile Include="Services\SettingsService.cs" />
-    <Compile Include="Services\TagCloudService.cs" />
     <Compile Include="Services\ThemePickerThemeSelector.cs" />
     <Compile Include="Services\UserAgentThemeSelectionRule.cs" />
     <Compile Include="Shapes\FaviconShapes.cs" />
@@ -239,22 +219,7 @@
     <Content Include="Views\EditorTemplates\Parts\Favicon.FaviconSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\Feedburner.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Parts\Feedburner.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\Meta.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\TagCloud.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Parts\TagCloud.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Index.cshtml" />

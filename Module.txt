@@ -27,11 +27,6 @@ Features:
         Description: Adds a favicon setting to site settings
 		Category: Content
 		Dependencies: Orchard.MediaLibrary, Settings
-    Vandelay.Feedburner:
-        Name: Vandelay Feedburner
-        Description: Enables Feedburner RSS feeds
-        Category: Syndication
-        Dependencies: Orchard.Alias, Feeds
     Vandelay.RelativeUrlFilter:
         Name: Vandelay Relative URL Filter
         Description: Transforms image source and link hrefs into absolute URLs, for example to avoid broken images in Feedburner.
@@ -46,16 +41,6 @@ Features:
         Description: Displays a splash screen to all first-time users.
         Category: Navigation
         Dependencies: Markdown, Orchard.MediaLibrary
-    Vandelay.TagCloud:
-        Name: Vandelay Tag Cloud
-        Description: A simple tag cloud widget and result pages for your Orchard sites.
-        Category: Navigation
-        Dependencies: Orchard.Tags, Orchard.Autoroute
-    Vandelay.TagRss:
-        Name: Vandelay Tag RSS
-        Description: Adds RSS feeds to tags.
-        Category: Syndication
-        Dependencies: Orchard.Tags, Feeds
     Vandelay.ThemePicker:
         Name: Vandelay Theme Picker
         Description: Pick a different theme based on the user agent.
