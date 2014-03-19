@@ -58,6 +58,8 @@ namespace Vandelay.Industries.Test.Stubs {
                     set { throw new NotImplementedException(); }
                 }
 
+                public string SiteCalendar { get; set; }
+
                 public ResourceDebugMode ResourceDebugMode {
                     get { throw new NotImplementedException(); }
                     set { throw new NotImplementedException(); }
@@ -67,6 +69,8 @@ namespace Vandelay.Industries.Test.Stubs {
                     get { throw new NotImplementedException(); }
                     set { throw new NotImplementedException(); }
                 }
+
+                public int MaxPageSize { get; set; }
 
                 public string BaseUrl { get { return _baseUrl; } }
 
