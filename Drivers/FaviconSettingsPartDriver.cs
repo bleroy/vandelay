@@ -34,7 +34,7 @@ namespace Vandelay.Industries.Drivers {
         }
 
         protected override DriverResult Editor(FaviconSettingsPart part, IUpdateModel updater, dynamic shapeHelper) {
-            updater.TryUpdateModel(part.Record, Prefix, null, null);
+            updater.TryUpdateModel(part, Prefix, null, null);
             _signals.Trigger("Vandelay.Favicon.Changed");
             return Editor(part, shapeHelper);
         }
