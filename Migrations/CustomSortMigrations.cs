@@ -15,7 +15,7 @@ namespace Vandelay.Industries.Migrations {
             SchemaBuilder.CreateTable(
                 "CustomSortOrderRecord",
                 table => table
-                    .ContentPartRecord()
+                    .Column<int>("Id", column => column.NotNull())
                     .Column<int>("CustomSortRecord_Id")
                     .Column<int>("SortOrder"));
 
