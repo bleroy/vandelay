@@ -36,6 +36,7 @@ namespace Vandelay.Industries.Handlers {
                     id = settings.CustomId;
                 }
                 if (!String.IsNullOrWhiteSpace(id)) {
+                    context.Shape.Id = id;
                     context.Shape.Attributes.Add("id", id);
                 }
                 var scriptList = customCss.Scripts;
