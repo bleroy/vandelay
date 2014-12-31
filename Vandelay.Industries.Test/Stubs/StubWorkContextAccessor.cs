@@ -71,6 +71,7 @@ namespace Vandelay.Industries.Test.Stubs {
                 }
 
                 public int MaxPageSize { get; set; }
+                public int MaxPagedCount { get; set; }
 
                 public string BaseUrl { get { return _baseUrl; } }
 
