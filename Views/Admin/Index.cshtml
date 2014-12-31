@@ -1,0 +1,74 @@
+﻿@using Vandelay.Industries.ViewModels
+@model ThemePickerIndexViewModel
+<h1>@Html.TitleForPage(T("Pick Themes for User Agents").ToString())</h1>
+
+<fieldset>
+@if (Model.ThemeSelectionSettings != null && Model.ThemeSelectionSettings.Count() != 0) {
+    using (Html.BeginFormAntiForgeryPost(Url.Action("Remove"))) {
+        @Html.ValidationSummary()
+        <ul>
+        @foreach (var de in Model.ThemeSelectionSettings) {
+            <li>
+                <input class="button" name="r@(de.Id)" type="submit" value="@T("Remove")" />
+                <b>@de.Name</b><br />
+                selects theme @de.Theme when
+                @de.RuleType
+                ("@de.Criterion")
+                <br />
+                Priority: @de.Priority
+                @if (!String.IsNullOrWhiteSpace(de.Zone)) {
+                    <br /><text>Link to revert to default theme injected into zone @de.Zone at position @de.Position</text>
+                }
+            </li>
+        }
+        </ul>
+    }
+}
+</fieldset>
+
+<fieldset>
+    <legend>@T("Add new theme selection criterion")</legend>
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("Add"))) {
+        <div>
+            <label for="Name">@T("Name:")</label>
+            @Html.TextBox("Name", "")
+            <span class="hint">@T("A name for the criterion (e.g. IE6 or Mobile).")</span>
+        </div>
+        <div>
+            <label for="RuleType">@T("Rule:")</label>
+            <select name="RuleType">
+                @foreach (var rule in Model.ThemeSelectionRules) {
+                    <option>@rule</option>
+                }
+            </select>
+            <span class="hint">@T("The rule that will be used to evaluate the criterion.")</span>
+        </div>
+        <div>
+            <label for="Criterion">@T("Criterion:")</label>
+            @Html.TextBox("Criterion", "", new { @class = "textMedium" })
+            <span class="hint">@T(@"The criterion to evaluate (e.g. ""^Mozilla\/4\.0 \(compatible; MSIE 6\.0; Windows NT \d\.\d(.*)\)$"" or ""phone"").")</span>
+        </div>
+        <div>
+            <label for="Theme">@T("Theme:")</label>
+            <select name="Theme">
+                @foreach (var theme in Model.Themes) {
+                    <option>@theme</option>
+                }
+            </select>
+            <span class="hint">@T("The theme that must be selected if the criterion matches according to the rule. Only enabled themes appear here. Please enable more than one theme in order to be able to use this feature.")</span>
+        </div>
+        <div>
+            <label for="Priority">@T("Priority:")</label>
+            @Html.TextBox("Priority", "10", new { @class = "text text-small" })
+            <span class="hint">@T("Setting the priority for this rule enables other theme providers to cohabitate with this one. You can leave the default value of 10 in other cases.")</span>
+        </div>
+        <div>
+            <label for="Zone">@T("Zone:")</label>
+            @Html.TextBox("Zone", "Header", new { @class = "text textMedium" })
+            <label for="Position">@T("Position:")</label>
+            @Html.TextBox("Position", "1", new { @class = "text text-small" })
+            <span class="hint">@T("Optionally specify a zone name and a position within that zone for a link that enables the user to switch back to the default theme. This link is rendered by the Vandelay_ThemePicker_LinkToDefault shape, using the Vandelay.ThemePicker.LinkToDefault.cshtml template of the theme.")</span>
+        </div>
+        <input class="button" name="@T("Add")" type="submit" value="Add" />
+    }
+</fieldset>
