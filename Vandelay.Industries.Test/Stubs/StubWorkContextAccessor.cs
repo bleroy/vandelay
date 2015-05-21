@@ -65,6 +65,8 @@ namespace Vandelay.Industries.Test.Stubs {
                     set { throw new NotImplementedException(); }
                 }
 
+                public bool UseCdn { get; set; }
+
                 public int PageSize{
                     get { throw new NotImplementedException(); }
                     set { throw new NotImplementedException(); }
