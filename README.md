@@ -41,17 +41,17 @@ The admin page for the theme picker can be found under the Picker tab of the The
 
 A bunch of command-line tools that facilitate the creation and management of Orchard translation files.
 
-* install translation <translationZip>
+* `install translation <translationZip>`
   Installs the translation files contained in the zip file. Translations for modules that are not physically present
   in the application are skipped.
-* package translation /Culture:<cultureCode> /Extensions:<extensionName1>,<extensionName2>... /Input:<inputDirectory> /Output:<outputDirectory>
+* `package translation /Culture:<cultureCode> /Extensions:<extensionName1>,<extensionName2>... /Input:<inputDirectory> /Output:<outputDirectory>`
   Packages translation files for the specified culture into a zip file in the specified output directory.
   One or more module or theme names can be specified, in which case only the po files for those modules
   and themes are included in the package. If no extension name is specified, all modules are scanned for
   po files, as well as Core and App_Data.
-* extract default translation /Extensions:<extensionName1>,<extensionName2>... /Input:<inputDirectory> /Output:<outputDirectory>
+* `extract default translation /Extensions:<extensionName1>,<extensionName2>... /Input:<inputDirectory> /Output:<outputDirectory>`
   Extracts and packages a translation file for the default culture.
-* sync translation /Input:<translationDirectory> /Culture:<cultureCode>
+* `sync translation /Input:<translationDirectory> /Culture:<cultureCode>`
   Synchronizes the translation for the specified culture with the default translation.
   If the translation for the specified culture does not exist yet, this generates a stub for it.
   The Output switch must point to a directory that contains both translations.
