@@ -12,6 +12,12 @@ using Vandelay.Industries.Models;
 namespace Vandelay.Industries.Filters {
     [OrchardFeature("Vandelay.SplashScreen")]
     public class SplashScreenFilter : FilterProvider, IResultFilter {
+        private IWorkContextAccessor _workContextAccessor;
+
+        public SplashScreenFilter(IWorkContextAccessor workContextAccessor) {
+            _workContextAccessor = workContextAccessor;
+        }
+
         public void OnResultExecuting(ResultExecutingContext filterContext) {
             // Splash screen itself is not subject to filtering
             var routeValues = filterContext.RouteData.Values;
@@ -45,7 +51,7 @@ namespace Vandelay.Industries.Filters {
                 .Cookies[SplashScreenSettingsPart.CookieName];
             // If cookie exists, the user has been here and has accepted the terms of use.
             if (splashScreenCookie != null && !String.IsNullOrWhiteSpace(splashScreenCookie.Value)) return;
-            var config = filterContext.GetWorkContext().CurrentSite.As<SplashScreenSettingsPart>();
+            var config = _workContextAccessor.GetContext().CurrentSite.As<SplashScreenSettingsPart>();
             if (config == null || !config.Enabled) return;
 
             // If request is for an ignored URL, don't display a splash screen

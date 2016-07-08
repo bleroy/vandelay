@@ -95,6 +95,16 @@ namespace Vandelay.Industries.Test.Stubs {
             public override void SetState<T>(string name, T value) {
                 _contextDictonary[name] = value;
             }
+
+            public override object Resolve(Type serviceType)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override bool TryResolve(Type serviceType, out object service)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public WorkContext GetContext(HttpContextBase httpContext) {

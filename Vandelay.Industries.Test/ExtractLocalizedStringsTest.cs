@@ -13,11 +13,11 @@ var baz = T(@""This is """"another"""" with weird """""""" quotes."""""");
 var what = T(""And another with C \""escapes\""."");
 ";
             var strings = LocalizationManagementService.FindLocalizedStrings(code);
-            AssertHelper.AreEquivalent(new[] {
+            Assert.That(strings, Is.EquivalentTo(new[] {
                 "This is a string",
                 "This is \"\"another\"\" with weird \"\"\"\" quotes.\"\"",
                 "And another with C \\\"escapes\\\"."
-            }, strings);
+            }));
         }
 
         [Test]
@@ -29,11 +29,11 @@ var baz = Something.Custom(@""This is """"another"""" with weird """""""" quotes
 var what = Something.Custom(""And another with C \""escapes\""."");
 ";
             var strings = LocalizationManagementService.FindLocalizedStrings(code, "Something.Custom(");
-            AssertHelper.AreEquivalent(new[] {
+            Assert.That(strings, Is.EquivalentTo(new[] {
                 "This is a string",
                 "This is \"\"another\"\" with weird \"\"\"\" quotes.\"\"",
                 "And another with C \\\"escapes\\\"."
-            }, strings);
+            }));
         }
 
         [Test]
@@ -45,18 +45,18 @@ var baz = T.Plural(@""This is """"another"""" with weird """""""" quotes."""""",
 var what = T.Plural(""And another with C \""escapes\""."", ""...and its \""plural\"" form."", 44);
 ";
             var strings = LocalizationManagementService.FindLocalizedStrings(code, "T.Plural(", true);
-            AssertHelper.AreEquivalent(new[] {
+            Assert.That(strings, Is.EquivalentTo(new[] {
                 "This is a string", "and its plural form",
                 "This is \"\"another\"\" with weird \"\"\"\" quotes.\"\"", "And its \"\"plural\"\" form.",
                 "And another with C \\\"escapes\\\".", "...and its \\\"plural\\\" form."
-            }, strings);
+            }));
         }
 
         [Test]
         public void NoQuotesInT() {
             const string code = @"ModelState.AddModelError(""_FORM"", T(ErrorCodeToString(/*createStatus*/MembershipCreateStatus.ProviderError)));";
             var strings = LocalizationManagementService.FindLocalizedStrings(code);
-            AssertHelper.AreEquivalent(new string[0], strings);
+            Assert.That(strings, Is.EquivalentTo(new string[0]));
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace Orchard.Users.Handlers {
     }
 }
 ";
-            AssertHelper.AreEquivalent(new[] {
+            Assert.That(LocalizationManagementService.FindLocalizedStrings(code), Is.EquivalentTo(new[] {
                 "New account",
                 "The user <b>{0}</b> with email <b>{1}</b> has requested a new account. This user won't be able to log while his account has not been approved.",
                 "Verification E-Mail",
@@ -151,8 +151,7 @@ namespace Orchard.Users.Handlers {
                 "<br/><br/>If you continue to have access problems or want to report other issues, please <a href=\\\"mailto:{0}\\\">Contact Us</a>.",
                 "Lost password",
                 "Dear {0}, please <a href=\\\"{1}\\\">click here</a> to change your password.",
-            },
-                                       LocalizationManagementService.FindLocalizedStrings(code));
+            }));
         }
     }
 }
