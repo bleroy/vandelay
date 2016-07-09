@@ -107,7 +107,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ionic.Zip.xml" />
     <Content Include="Scripts\admin-custom-sort.min.js.map">
       <DependentUpon>admin-custom-sort.js</DependentUpon>
     </Content>
@@ -123,7 +122,6 @@
     </Content>
     <Content Include="Styles\UserStorageAdmin.css" />
     <Content Include="Vandelay.gif" />
-    <Content Include="Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
     <Content Include="Module.txt" />
     <Content Include="Views\CustomSortAdmin.Index.cshtml" />
@@ -272,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
