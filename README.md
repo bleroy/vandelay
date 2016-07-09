@@ -11,6 +11,14 @@ To use, go into content/content types, edit a content type and add the Custom CS
 The content template for the content type may have to be changed so that it renders the additional attributes.
 See http://orchard.codeplex.com/discussions/259938.
 
+## Content Admin Menu
+
+Adds an admin menu entry per content type under the "Content" header.
+
+## Custom Sort
+
+Drag and drop content items to create custom sort orders that can then be used in projections.
+
 ## Favicon
 
 This feature adds a favicon configuration page to site settings.
@@ -24,9 +32,17 @@ Add the Meta content part to Page or to any of your content types to add keyword
 This will not magically get your site to #1 in search engines. The best SEO techniques are to write relevant contents,
 format it with valid markup under friendly URLs.
 
-##Remote RSS
+## Relative URL Filter
+
+Transforms image source and link hrefs into absolute URLs, for example to avoid broken images in Feedburner.
+
+## Remote RSS
 
 Include remote RSS feeds into your site using a widget or a content part.
+
+## Splash Screen
+
+Displays a splash screen to all first-time users.
 
 ## Theme Picker
 
