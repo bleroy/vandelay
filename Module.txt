@@ -4,15 +4,15 @@ Author: Bertrand Le Roy
 Website: http://weblogs.asp.net/bleroy
 Version: 1.9
 OrchardVersion: 1.9
-Description: A collection of useful Orchard modules
+Description: A collection of useful Orchard modules.
 FeatureName: Vandelay Meta
 Category: Content
-FeatureDescription: Meta keyword and description for content items
+FeatureDescription: Meta keyword and description for content items.
 Features:
     Vandelay.Classy:
         Name: Vandelay Classy
         Description: Add ids, classes and scripts to the rendering of your content items through this part that can be added to any content type.
-		Category: Designer
+        Category: Designer
     Vandelay.ContentAdminMenu:
         Name: Vandelay Content Admin Menu
         Description: Adds an admin menu entry per content type under the "Content" header.
@@ -24,16 +24,16 @@ Features:
         Dependencies: Orchard.Projections
     Vandelay.Favicon:
         Name: Vandelay Favicon
-        Description: Adds a favicon setting to site settings
-		Category: Content
-		Dependencies: Orchard.MediaLibrary, Settings
+        Description: Adds a favicon setting to site settings.
+        Category: Content
+        Dependencies: Orchard.MediaLibrary, Settings
     Vandelay.RelativeUrlFilter:
         Name: Vandelay Relative URL Filter
         Description: Transforms image source and link hrefs into absolute URLs, for example to avoid broken images in Feedburner.
         Category: Content
     Vandelay.RemoteRss:
         Name: Vandelay Remote RSS
-        Description: Include remote RSS feeds into your Orchard sites
+        Description: Include remote RSS feeds into your Orchard sites.
         Category: Syndication
         Dependencies: Feeds
     Vandelay.SplashScreen:
@@ -45,10 +45,10 @@ Features:
         Name: Vandelay Theme Picker
         Description: Pick a different theme based on the user agent.
         Category: Designer
-		Dependencies: Orchard.Themes
+        Dependencies: Orchard.Themes
     Vandelay.TranslationManager:
         Name: Vandelay Translation Manager
-        Description: Translation management tools
+        Description: Translation management tools.
         Category: Localization
     Vandelay.UserStorage:
         Name: Vandelay User Storage
