@@ -351,7 +351,7 @@ namespace Vandelay.Industries.Services {
             {
                 Usage = !string.IsNullOrEmpty(comment) && comment != value ?
                     "#. " + comment : string.Empty,
-                Context = "msgctxt " + context,
+                Context = "msgctxt " + EnsureStringIsWrappedInQuotes(context),
                 Id = "msgid " + value,
                 Translation = "msgstr " + value
             };
@@ -428,6 +428,13 @@ namespace Vandelay.Industries.Services {
                 }
                 if (nextT == -1) yield break;
             }
+        }
+
+        public static string EnsureStringIsWrappedInQuotes(string text) {
+            if (!text.StartsWith("\"")) text = '"' + text;
+            if (!text.EndsWith("\"")) text = text + '"';
+
+            return text;
         }
     }
 }
