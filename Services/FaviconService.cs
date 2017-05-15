@@ -48,7 +48,7 @@ namespace Vandelay.Industries.Services {
         public IEnumerable<string> GetFaviconSuggestions() {
             List<string> faviconSuggestions = null;
             var rootMediaFolders = _mediaService
-                .GetMediaFolders(".")
+                .GetMediaFolders(String.Empty)
                 .Where(f => f.Name.Equals(FaviconMediaFolder, StringComparison.OrdinalIgnoreCase));
             if (rootMediaFolders.Any()) {
                 faviconSuggestions = new List<string>(
